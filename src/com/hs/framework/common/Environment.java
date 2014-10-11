@@ -14,9 +14,6 @@ public enum Environment {
 	
 	PRODUCTION(false);
 	
-	/**
-	 * 是否开启日志打印
-	 */
 	private boolean isDebug;
 	
 	private Environment(boolean isDebug) {
