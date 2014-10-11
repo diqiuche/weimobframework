@@ -2,7 +2,7 @@ weimobframework
 ===============
 
 <h2>上海晖硕信息科技有限公司 Android项目框架<h2>
-<br><h3>android.library=true</h3>
+<h3>android.library=true</h3>
 
 --------------------------------------------
 
