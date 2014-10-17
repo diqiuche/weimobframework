@@ -16,7 +16,12 @@ Code By : Wang Huan
 
 更新信息：
 --------------------------------------------
-<h3>Version 1.0 （10%）</h3>
+<h3>Version 1.0 更新日期：2014/10/16</h3>
+<br>1：图片加载引擎
+<br>2：Sample Project
+<br>3：Exception 
+<br>4：Framework及FrameworkConfiguration
+<h3>Version 1.0 更新日期：2014/10/11</h3>
 <br>1：基础结构
 <br>2：网络请求模块
 <br>3：通用广播接收（网络变化，Home键，退出程序）
