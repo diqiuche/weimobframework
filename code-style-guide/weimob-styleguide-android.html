@@ -1,0 +1,1503 @@
+
+<!doctype html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimal-ui">
+
+<script src="javascript/prettify.js" type="text/javascript"></script>
+<script src="javascript/zeroclipboard.js"></script>
+<script src="https://download.leancloud.cn/sdk/latest.js"></script>
+<script type="text/javascript">
+ZeroClipboard.setDefaults({
+    moviePath: 'zeroclipboard/zeroclipboard.swf'
+});
+</script>
+<title>Weimob Android代码规范指导</title>
+<link rel="stylesheet" type="text/css" href="css/weimob.css">
+</head>
+
+
+<body ng-app="app" class="dashboard-init" data-spy="scroll" data-target=".sidebar-wrapper" data-offset="30" ng-cloak="">
+
+<header class="navbar navbar-light" role="banner" id="top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand font-logo">
+        Weimob Android代码规范指导
+      </a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li><a href="/docs/index.html">文档首页</a> </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-hover="dropdown" href="#">iOS / OS X</a>
+          <ul class="dropdown-menu">
+            <li><a href="ios_os_x_guide.html">iOS / OS X 指南</a></li>
+            <li><a href="ios_statistics.html">iOS 统计 SDK 开发指南</a></li>
+            <li><a href="ios_push_cert.html">iOS 推送证书设置指南</a></li>
+            <li><a href="api/iOS/index.html" target="_blank">iOS SDK API</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-hover="dropdown" href="#">Android</a>
+          <ul class="dropdown-menu">
+            <li><a href="android_guide.html">Android 开发指南</a></li>
+            <li><a href="android_statistics.html">Android 统计 SDK 开发指南</a></li>
+            <li><a href="api/android/doc/index.html" target="_blank">Android SDK API</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-hover="dropdown" href="#">JavaScript</a>
+          <ul class="dropdown-menu">
+            <li><a href="js_guide.html">JavaScript 指南</a></li>
+            <li><a href="api/javascript/index.html" target="_blank">JavaScript SDK API</a></li>
+            <li><a href="cloud_code_guide.html">云代码指南</a></li>
+          </ul>
+        </li>
+        <!-- <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">SDK API</a>
+          <ul class="dropdown-menu">
+            <li><a href="api/iOS/index.html" target="_blank">iOS SDK API</a></li>
+            <li><a href="api/android/doc/index.html" target="_blank">Android SDK API</a></li>
+            <li><a href="api/javascript/index.html" target="_blank">JavaScript SDK API</a></li>
+          </ul>
+        </li> -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-hover="dropdown" href="#">更多</a>
+          <ul class="dropdown-menu">
+            <li><a href="/start.html">快速入门</a></li>
+            <li><a href="sdk_down.html">SDK 下载</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li class="divider"></li>
+            <li><a href="rest_api.html">REST API 详解</a></li>
+            <li><a href="cloud_code_guide.html">云代码指南</a></li>
+            <li><a href="sns.html">SNS 组件开发指南</a></li>
+            <li><a href="status_system.html">事件流系统</a></li>
+            <li><a href="push_guide.html">消息推送开发指南</a></li>
+            <li><a href="realtime.html">实时通信开发指南</a></li>
+            <li><a href="feedback.html">用户反馈组件开发指南</a></li>
+            <li><a href="data_security.html">数据和安全</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right" role="search" action="/search.html" method="get">
+        <div class="form-group">
+          <input name="q" type="text" class="form-control" placeholder="&#x641C;&#x7D22;&#x2026;">
+        </div>
+        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+      </form>
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li>
+          <form action="/search.html" method="get" target="_blank" class="search-form">
+            <input name="q" class="search-input" placeholder="搜索&hellip;">
+          </form>
+        </li>
+      </ul> -->
+    </nav>
+  </div>
+</header>
+
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-sm-3 sidebar-gruntfile-trigger">
+
+      <div class="sidebar-affix-shadow">
+
+        <div class="sidebar-wrapper">
+
+        <ul id="toc" class="nav">
+<li><a href="#android-&#x5F00;&#x53D1;&#x6307;&#x5357;">Android 开发指南</a><ul>
+<li><a href="#&#x7248;&#x672C;&#x53D8;&#x8FC1;">版本变迁</a></li>
+<li><a href="#&#x6A21;&#x5757;&#x4E0E;-sdk-&#x5305;">模块与 SDK 包</a><ul>
+<li><a href="#leancloud-&#x57FA;&#x672C;&#x5B58;&#x50A8;&#x6A21;&#x5757;">LeanCloud 基本存储模块</a></li>
+<li><a href="#leancloud-&#x63A8;&#x9001;&#x6A21;&#x5757;&#x548C;&#x5B9E;&#x65F6;&#x804A;&#x5929;&#x6A21;&#x5757;">LeanCloud 推送模块和实时聊天模块</a></li>
+<li><a href="#leancloud-&#x7EDF;&#x8BA1;&#x6A21;&#x5757;">LeanCloud 统计模块</a></li>
+<li><a href="#leancloud-sns-&#x6A21;&#x5757;">LeanCloud SNS 模块</a></li>
+</ul>
+</li>
+<li><a href="#&#x7B80;&#x4ECB;">简介</a></li>
+<li><a href="#&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x521D;&#x59CB;&#x5316;">应用程序初始化</a></li>
+<li><a href="#&#x6570;&#x636E;&#x7684;&#x5B58;&#x50A8;">数据的存储</a><ul>
+<li><a href="#&#x4FDD;&#x5B58;&#x5BF9;&#x8C61;">保存对象</a></li>
+<li><a href="#&#x6570;&#x636E;&#x68C0;&#x7D22;">数据检索</a></li>
+<li><a href="#&#x5728;&#x540E;&#x53F0;&#x5DE5;&#x4F5C;">在后台工作</a></li>
+<li><a href="#&#x66F4;&#x65B0;&#x5BF9;&#x8C61;">更新对象</a></li>
+<li><a href="#&#x8BA1;&#x6570;&#x5668;">计数器</a></li>
+<li><a href="#&#x66F4;&#x65B0;&#x540E;&#x83B7;&#x53D6;&#x6700;&#x65B0;&#x503C;">更新后获取最新值</a></li>
+<li><a href="#&#x5220;&#x9664;&#x5BF9;&#x8C61;">删除对象</a></li>
+<li><a href="#&#x5173;&#x8054;&#x6570;&#x636E;">关联数据</a></li>
+<li><a href="#&#x6570;&#x636E;&#x7C7B;&#x578B;">数据类型</a></li>
+</ul>
+</li>
+<li><a href="#&#x67E5;&#x8BE2;">查询</a><ul>
+<li><a href="#&#x57FA;&#x672C;&#x67E5;&#x8BE2;">基本查询</a></li>
+<li><a href="#&#x67E5;&#x8BE2;&#x6761;&#x4EF6;">查询条件</a></li>
+<li><a href="#&#x6570;&#x7EC4;&#x503C;&#x7684;&#x67E5;&#x8BE2;">数组值的查询</a></li>
+<li><a href="#&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x67E5;&#x8BE2;">字符串的查询</a></li>
+<li><a href="#&#x67E5;&#x8BE2;&#x5BF9;&#x8C61;&#x4E2A;&#x6570;">查询对象个数</a></li>
+<li><a href="#&#x5173;&#x7CFB;&#x67E5;&#x8BE2;">关系查询</a></li>
+<li><a href="#&#x7F13;&#x5B58;&#x67E5;&#x8BE2;">缓存查询</a><ul>
+<li><a href="#last-modified&#x9009;&#x9879;">Last-Modified选项</a></li>
+</ul>
+</li>
+<li><a href="#&#x590D;&#x5408;&#x67E5;&#x8BE2;">复合查询</a></li>
+<li><a href="#&#x5220;&#x9664;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;">删除查询结果</a></li>
+<li><a href="#cql&#x67E5;&#x8BE2;">CQL查询</a></li>
+</ul>
+</li>
+<li><a href="#&#x5B50;&#x7C7B;&#x5316;">子类化</a><ul>
+<li><a href="#&#x5B50;&#x7C7B;&#x5316;-avobject">子类化 AVObject</a></li>
+<li><a href="#&#x8BBF;&#x95EE;&#x5668;&#xFF0C;&#x4FEE;&#x6539;&#x5668;&#x548C;&#x65B9;&#x6CD5;">访问器，修改器和方法</a></li>
+<li><a href="#&#x521D;&#x59CB;&#x5316;&#x5B50;&#x7C7B;">初始化子类</a></li>
+<li><a href="#&#x67E5;&#x8BE2;&#x5B50;&#x7C7B;">查询子类</a></li>
+<li><a href="#avuser-&#x7684;&#x5B50;&#x7C7B;&#x5316;">AVUser 的子类化</a></li>
+</ul>
+</li>
+<li><a href="#acl&#x6743;&#x9650;&#x63A7;&#x5236;">ACL权限控制</a><ul>
+<li><a href="#&#x9ED8;&#x8BA4;&#x8BBF;&#x95EE;&#x6743;&#x9650;">默认访问权限</a></li>
+<li><a href="#&#x6307;&#x5B9A;&#x7528;&#x6237;&#x8BBF;&#x95EE;&#x6743;&#x9650;">指定用户访问权限</a></li>
+<li><a href="#&#x6307;&#x5B9A;&#x89D2;&#x8272;&#x8BBF;&#x95EE;&#x6743;&#x9650;">指定角色访问权限</a><ul>
+<li><a href="#avuser&#x4E0E;avrole&#x7684;&#x4ECE;&#x5C5E;&#x5173;&#x7CFB;">AVUser与AVRole的从属关系</a></li>
+<li><a href="#avrole&#x4E4B;&#x95F4;&#x7684;&#x4ECE;&#x5C5E;&#x5173;&#x7CFB;">AVRole之间的从属关系</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#&#x6587;&#x4EF6;">文件</a><ul>
+<li><a href="#&#x6587;&#x4EF6;&#x5BF9;&#x8C61;">文件对象</a></li>
+<li><a href="#&#x4E0A;&#x4F20;&#x6587;&#x4EF6;">上传文件</a></li>
+<li><a href="#&#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;">上传进度</a></li>
+<li><a href="#&#x4E0B;&#x8F7D;&#x6587;&#x4EF6;">下载文件</a></li>
+<li><a href="#&#x6587;&#x4EF6;&#x5143;&#x4FE1;&#x606F;">文件元信息</a></li>
+<li><a href="#&#x5220;&#x9664;&#x6587;&#x4EF6;">删除文件</a></li>
+<li><a href="#&#x56FE;&#x7247;&#x7F29;&#x7565;&#x56FE;">图片缩略图</a></li>
+<li><a href="#&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x540D;">获取文件名</a></li>
+<li><a href="#&#x6587;&#x4EF6;&#x5217;&#x8868;">文件列表</a></li>
+</ul>
+</li>
+<li><a href="#&#x7528;&#x6237;">用户</a><ul>
+<li><a href="#&#x5C5E;&#x6027;">属性</a></li>
+<li><a href="#&#x6CE8;&#x518C;">注册</a></li>
+<li><a href="#&#x767B;&#x5F55;">登录</a></li>
+<li><a href="#&#x5F53;&#x524D;&#x7528;&#x6237;">当前用户</a></li>
+<li><a href="#&#x91CD;&#x7F6E;&#x5BC6;&#x7801;">重置密码</a></li>
+<li><a href="#&#x4FEE;&#x6539;&#x5BC6;&#x7801;">修改密码</a></li>
+<li><a href="#&#x53D1;&#x9001;&#x9A8C;&#x8BC1;&#x90AE;&#x4EF6;">发送验证邮件</a></li>
+<li><a href="#&#x624B;&#x673A;&#x53F7;&#x7801;&#x9A8C;&#x8BC1;">手机号码验证</a></li>
+<li><a href="#&#x624B;&#x673A;&#x53F7;&#x7801;&#x767B;&#x5F55;">手机号码登录</a></li>
+<li><a href="#&#x624B;&#x673A;&#x53F7;&#x7801;&#x91CD;&#x7F6E;&#x5BC6;&#x7801;">手机号码重置密码</a></li>
+<li><a href="#&#x67E5;&#x8BE2;-1">查询</a></li>
+<li><a href="#&#x533F;&#x540D;&#x7528;&#x6237;">匿名用户</a></li>
+<li><a href="#&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x67E5;&#x770B;&#x7528;&#x6237;&#x8868;">浏览器中查看用户表</a></li>
+</ul>
+</li>
+<li><a href="#&#x5730;&#x7406;&#x4F4D;&#x7F6E;">地理位置</a><ul>
+<li><a href="#&#x5730;&#x7406;&#x4F4D;&#x7F6E;&#x5BF9;&#x8C61;">地理位置对象</a></li>
+<li><a href="#&#x5730;&#x7406;&#x67E5;&#x8BE2;">地理查询</a></li>
+<li><a href="#&#x6CE8;&#x610F;&#x4E8B;&#x9879;">注意事项</a></li>
+</ul>
+</li>
+<li><a href="#&#x8C03;&#x7528;&#x4E91;&#x4EE3;&#x7801;">调用云代码</a><ul>
+<li><a href="#&#x8C03;&#x7528;&#x51FD;&#x6570;">调用函数</a></li>
+<li><a href="#&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x548C;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;">生产环境和测试环境</a></li>
+</ul>
+</li>
+<li><a href="#&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;&#x670D;&#x52A1;">短信验证码服务</a><ul>
+<li><a href="#&#x8BF7;&#x6C42;&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;">请求短信验证码</a></li>
+<li><a href="#&#x9A8C;&#x8BC1;&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;">验证短信验证码</a></li>
+</ul>
+</li>
+<li><a href="#&#x4EE3;&#x7801;&#x6DF7;&#x6DC6;">代码混淆</a></li>
+</ul>
+</li>
+</ul></div>
+        <!-- .sidebar-wrapper -->
+
+      </div>
+      <!-- .sidebar-affix-shadow -->
+
+    </div>
+    <!-- .col-md-3 -->
+
+    <div class="col-sm-9 sidebar-gruntfile-trigger">
+      <div class="doc-content" ng-controller="AppCtrl">
+        
+<div id="content"><h1 id="android-&#x5F00;&#x53D1;&#x6307;&#x5357;">Android 开发指南</h1><p>如果你还没有安装 LeanCloud SDK ，请前往<a href="/start.html">快速入门指南</a>。</p><p>如果你希望从项目里学习，请前往 <a href="https://github.com/avoscloud/Android-SDK-demos">Android-SDK-Demos</a> 。</p><h2 id="&#x7248;&#x672C;&#x53D8;&#x8FC1;">版本变迁</h2><p>从 2.0.0 开始，我们把以 <code>Parse</code> 开头的所有类名修改为以 <code>AV</code> 开头。我们为 1.x 版本的老用户<a href="https://raw.github.com/avos/avoscloud-sdk/master/android/migrate.rb">提供了自动升级脚本</a>，请在项目的根目录运行 <a href="https://raw.github.com/avos/avoscloud-sdk/master/android/migrate.rb">migrate.rb</a>，它会自动替换所有旧的 SDK 类名。
+从 2.4.0 开始, 我们重新设计了 sdk 结构，优化了模块间的依赖关系，实现了分模块下载 SDK 的功能。新的 SDK 不再需要你一下导入所有包 --- 除了最基本的 avoscloud.jar 以外，其余的包括 avospush.jar, avosstatistics.jar 等都可以在用到该组件时才导入。</p><h2 id="&#x6A21;&#x5757;&#x4E0E;-sdk-&#x5305;">模块与 SDK 包</h2><p>从 2.4.0 开始, 我们重新设计了 SDK 的结构，优化了模块间的依赖关系，实现了分模块下载 SDK 的功能。以下列举每个模块需要的包：</p><h3 id="leancloud-&#x57FA;&#x672C;&#x5B58;&#x50A8;&#x6A21;&#x5757;">LeanCloud 基本存储模块</h3><ul>
+<li>avoscloud-&lt;版本号&gt;.jar</li>
+<li>android-async-http-1.4.4-fix.jar</li>
+<li>fastjson.jar</li>
+<li>httpmime-4.2.4.jar</li>
+</ul><h3 id="leancloud-&#x63A8;&#x9001;&#x6A21;&#x5757;&#x548C;&#x5B9E;&#x65F6;&#x804A;&#x5929;&#x6A21;&#x5757;">LeanCloud 推送模块和实时聊天模块</h3><ul>
+<li>LeanCloud 基础存储模块</li>
+<li>avospush-版本号.jar</li>
+</ul><h3 id="leancloud-&#x7EDF;&#x8BA1;&#x6A21;&#x5757;">LeanCloud 统计模块</h3><ul>
+<li>LeanCloud基础存储模块</li>
+<li>avosstatistics-版本号.jar</li>
+</ul><h3 id="leancloud-sns-&#x6A21;&#x5757;">LeanCloud SNS 模块</h3><ul>
+<li>LeanCloud基础存储模块</li>
+<li>weibo.sdk.android.sso.jar</li>
+<li>qq.sdk.1.6.1.jar</li>
+</ul><p>我们提供的下载包里包含了必须的依赖库，请务必使用我们提供的jar包，才能保证SDK的正常运行。特别是 fastjson 和 android-async-http 必须使用我们提供的版本，否则无法运行。</p><h2 id="&#x7B80;&#x4ECB;">简介</h2><p>LeanCloud 平台为移动应用提供了一个完整的后端解决方案，目标是让开发者不需要再编写和维护传统的服务器代码。我们提供的 SDK 开发包也非常轻量，让开发者用最简单的方式使用 LeanCloud 平台的服务。</p><h2 id="&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x521D;&#x59CB;&#x5316;">应用程序初始化</h2><p>以下为 LeanCloud Android SDK 需要的所有的权限，请检查你的 <code>AndroidManifest.xml</code>。此外千万不要忘记在 <code>AndroidManifest.xml</code> 中注明 application name！过去用户反馈的很多问题都是因为这一步没有正确配置导致的。</p><pre><code>    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot; /&gt;</code></pre><p>在 LeanCloud 平台注册后，你创建的每个应用都有自己的 ID 和 Key，在你的代码中将凭此 ID 和 Key 来访问 LeanCloud 的服务。你可以在一个帐号中创建多个应用。</p><p>在你的应用访问 LeanCloud 之前，你需要使用上述的 ID 和 Key 在代码中对 LeanCloud SDK 进行初始化。你需要继承 <a href="http://developer.android.com/reference/android/app/Application.html"><code>Application</code></a> 类，并且在 <code>onCreate()</code> 方法中调用 <code>AVOSCloud.initialize(AppId,AppKey)</code> 来进行初始化。</p><h2 id="&#x6570;&#x636E;&#x7684;&#x5B58;&#x50A8;">数据的存储</h2><p>LeanCloud 的数据存储服务是建立在对象 --- <code>AVObject</code> 基础上的，每个 <code>AVObject</code> 包含若干属性，属性的值是与 JSON 格式兼容的数据。你不需要预先指定每个 <code>AVObject</code> 包含哪些属性，可以随时增加新的属性。</p><p>例如要记录一个游戏的分数，可以建立一个类名为 GameScore 的 <code>AVObject</code> 对象，包含下面三个属性：</p><pre><code>score: 9876, playerName: &quot;Charlie&quot;, level: 12</code></pre><p>属性名称必须是由字母、数字组成的字符串，属性的值可以是字符串、数字、布尔值、JSON 数组，甚至可以嵌套其他 <code>AVObject</code>。每个 <code>AVObject</code> 有一个类名，也是 Dashboard 里的数据表名。</p><h3 id="&#x4FDD;&#x5B58;&#x5BF9;&#x8C61;">保存对象</h3><p>要保存 GameScore 数据到云端，添加数据的方法与 Java 中的 <code>Map</code> 类似：</p><pre><code>AVObject gameScore = new AVObject(&quot;GameScore&quot;);
+gameScore.put(&quot;score&quot;, 1200);
+gameScore.put(&quot;playerName&quot;, &quot;steve&quot;);
+gameScore.put(&quot;level&quot;, 10);
+try {
+    gameScore.save();
+} catch (AVException e) {
+    // e.getMessage() 捕获的异常信息
+}</code></pre><p>成功运行以上代码后，数据就已经保存到 LeanCloud。为确认这一点，你可以用 LeanCloud 控制台的数据浏览器查看<a href="/data.html?appid={{appid}}">该应用的数据</a>，找到这个对象：</p><pre><code>objectId: &quot;542b6b9ee4b06664dd893da1&quot;, score: 9876, playerName: &quot;Charlie&quot;, level: 12,
+createdAt:&quot;2013-10-29 11:24:28&quot;, updatedAt:&quot;2013-10-29 11:24:28&quot;</code></pre><p>因为 AVObject 是无模式的，后续你可以向 GameScore 里面增加新的属性，例如玩家 Robin 的成绩记录里面还包含一些游戏存档信息</p><pre><code>AVObject gameScore = new AVObject(&quot;GameScore&quot;);
+gameScore.put(&quot;score&quot;, 1400);
+gameScore.put(&quot;playerName&quot;, &quot;Robin&quot;);
+gameScore.put(&quot;level&quot;, 20);
+gameScore.put(&quot;gold&quot;, 32000);
+gameScore.put(&quot;coin&quot;, 500);
+gameScore.put(&quot;chapter&quot;, 15);
+gameScore.put(&quot;stage&quot;, 8);
+try {
+    gameScore.save();
+} catch (AVException e) {
+    // e.getMessage() 捕获的异常信息
+}</code></pre><p>这里需要注意几点：</p><ul>
+<li>在运行以上代码时，如果云端（LeanCloud的服务器，以下简称云端）不存在 <code>GameScore</code> 数据表，那么 LeanCloud 将根据你第一次（也就是运行的以上代码）保存的 <code>GameScore</code> 对象来创建数据表，并且插入相应数据。</li>
+<li>如果云端的这个应用中已经存在名为 <code>GameScore</code> 的数据表，而且也包括 <code>score</code>、<code>playerName</code>、<code>level</code> 等属性，新加入属性的值的数据类型要和创建该属性时一致，否则保存数据将失败。</li>
+<li>每个 <code>AVObject</code> 对象有几个保存元数据的属性是不需要开发者指定的，包括 <code>objectId</code> 是每个成功保存的对象的唯一标识符。<code>createdAt</code> 和 <code>updatedAt</code> 是每个对象在服务器上创建和最后修改的时间。这些属性的创建和更新是由系统自动完成的，请不要在代码里使用这些属性来保存数据。</li>
+<li>在Android平台上，大部分的代码是在主线程上运行的，如果在主线程上进行耗时的阻塞性操作，如访问网络等，你的代码可能会无法正常运行，避免这个问题的方法是把会导致阻塞的同步操作改为异步，在一个后台线程运行，例如 <code>save()</code> 还有一个异步的版本 <code>saveInBackground()</code>，需要传入一个在异步操作完成后运行的回调函数。查询、更新、删除操作也都有对应的异步版本。</li>
+</ul><h3 id="&#x6570;&#x636E;&#x68C0;&#x7D22;">数据检索</h3><p>使用 LeanCloud 查询数据比保存更容易。如果你已经知道某条数据的 <code>objectId</code>，可以使用 <code>AVQuery</code> 直接检索到一个完整的 <code>AVObject</code>：</p><pre><code>AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;GameScore&quot;);
+AVObject gameScore;
+try {
+    gameScore = query.get(&quot;542b6b9ee4b06664dd893da1&quot;);
+} catch (AVException e) {
+    // e.getMessage()
+}</code></pre><p>要从检索到的 <code>AVObject</code> 对象中获取值，可以使用相应的数据类型的 <code>getType</code> 方法：</p><pre><code>int score = gameScore.getInt(&quot;score&quot;);
+String playerName = gameScore.getString(&quot;playerName&quot;);
+int level = gameScore.getInt(&quot;level&quot;);</code></pre><h3 id="&#x5728;&#x540E;&#x53F0;&#x5DE5;&#x4F5C;">在后台工作</h3><p>在 Android 平台上，大部分代码是在主线程上运行的，如果在主线程上进行耗时的阻塞性操作，例如查询大量数据，你的代码可能无法正常运行。避免这个风险的办法是变同步为异步，LeanCloud SDK 提供了现成的异步解决方案。例如，我们使用 <code>saveInBackground</code> 方法来在一个后台线程中保存之前的 <code>AVObject</code> 对象：</p><pre><code>gameScore.saveInBackground();</code></pre><p>开发者不需要自己动手实现多线程，<code>saveInBackground()</code> 的操作将在后台线程中进行，不会影响应用程序的响应。</p><p>通常情况下，我们希望知道后台线程任务的结果，比如保存数据是否成功？LeanCloud 也为此提供了回调类。对于 <code>saveInBackground()</code> 方法，有一个 <code>saveCallback</code> 回调方式。最简单的使用方法是写一个匿名内部类来接收回调结果。例如你想知道保存数据是否成功：</p><pre><code>gameScore.saveInBackground(new SaveCallback() {
+    public void done(AVException e) {
+        if (e == null) {
+            // 保存成功
+        } else {
+            // 保存失败，输出错误信息
+        }
+    }
+});</code></pre><p><code>SaveCallback()</code> 中的代码将在获取数据完成后在主线程上运行，可以在其中进行更新用户界面等操作。</p><p><code>AVQuery</code> 的 <code>getInBackground</code> 方法是从云端获取数据的异步方法，也提供类似的回调类。以获取 GameScore 对象为例：</p><pre><code>AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;GameScore&quot;);
+query.getInBackground(&quot;51c912bee4b012f89e344ae9&quot;, new GetCallback&lt;AVObject&gt;() {
+    public void done(AVObject gameScore, AVException e) {
+        if (e == null) {
+            Log.d(&quot;获取分数&quot;, &quot;比分是：&quot; + gameScore.getInt(&quot;score&quot;));
+        } else {
+            Log.e(&quot;获取分数&quot;, &quot;错误: &quot; + e.getMessage());
+        }
+    }
+});</code></pre><h3 id="&#x66F4;&#x65B0;&#x5BF9;&#x8C61;">更新对象</h3><p>更新保存在云端的对象也是非常简单的。首先获取到要更新的 <code>AVObject</code> 对象，进行修改后再保存即可。例如：</p><pre><code>String tableName = &quot;GameScore&quot;;
+AVObject gameScore = new AVObject(tableName);
+AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(tableName);
+
+
+gameScore = query.get(&quot;51c912bee4b012f89e344ae9&quot;);
+gameScore.put(&quot;score&quot;,1766);
+gameScore.saveInBackground(new SaveCallback() {
+   @Override
+   public void done(AVException e) {
+        if (e == null) {
+            Log.i(&quot;LeanCloud&quot;, &quot;Save successfully.&quot;);
+        } else {
+            Log.e(&quot;LeanCloud&quot;, &quot;Save failed.&quot;);
+        }
+    }
+});</code></pre><h3 id="&#x8BA1;&#x6570;&#x5668;">计数器</h3><p>许多应用都需要实现计数器功能 -- 比如跟踪游戏的分数、金币甚至道具数目等等。LeanCloud 提供了便捷的原子操作来实现计数器：</p><pre><code>AVObject player = new AVObject(&quot;Player&quot;);
+player.put(&quot;goldCoins&quot;, 1);
+player.saveInBackground();</code></pre><p>然后，你可以递增或者递减 <code>goldCoins</code>，没错就这么简单：</p><pre><code>player.increment(&quot;goldCoins&quot;);
+player.saveInBackground();</code></pre><p>通过使用 <code>increment(key, amount)</code> 方法，你可以自行定义增减的幅度。</p><h3 id="&#x66F4;&#x65B0;&#x540E;&#x83B7;&#x53D6;&#x6700;&#x65B0;&#x503C;">更新后获取最新值</h3><p>为了减少网络传输，在更新对象操作后，对象本地的 <code>updatedAt</code> 字段（最后更新时间）会被刷新，但其他字段不会从云端重新获取。如果你想在更新后从云端获取全部字段的最新数值，可以通过设置 <code>fetchWhenSave</code> 属性为 <code>true</code> 来实现，例如：</p><pre><code>player.setFetchWhenSave(true);
+player.increment(&quot;goldCoins&quot;);
+player.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                //从这时候开始，player的修改的属性全部更新到最新状态，这里就是goldCoins
+            }
+ });</code></pre><p>这个特性在实现减库存等操作时特别有用，每次递减库存后，可以检查最新的值是否小于 0，来判断是否售空。</p><h3 id="&#x5220;&#x9664;&#x5BF9;&#x8C61;">删除对象</h3><p>从云端删除对象，请调用该对象的 <code>deleteInBackground()</code> 方法。如果你不在乎会阻塞主线程，也可以使用 <code>delete()</code> 方法。确认删除是否成功，你可以使用 <code>DeleteCallback</code> 回调来处理删除操作的结果。</p><pre><code>myObject.deleteInBackground();</code></pre><p>除了完整删除一个对象外，你还可以只删除对象中的某些指定的值。请注意只有调用 <code>saveInBackground()</code> 之后，修改才会同步到云端。</p><pre><code>// 删除myObject对象中PlayerName字段的值
+myObject.remove(&quot;playerName&quot;);
+// 保存删除数据后的myObject对象到服务器
+myObject.saveInBackground();</code></pre><p>批量删除对象可以通过 <code>deleteAll()</code> 方法，删除操作马上生效。</p><pre><code>List&lt;AVObject&gt; objects = ...
+AVObject.deleteAll(objects);</code></pre><h3 id="&#x5173;&#x8054;&#x6570;&#x636E;">关联数据</h3><p>对象可以与其他对象相联系。就像数据库中的主外键关系一样，数据表A的某一个字段是数据表B的外键，只有表B中存在的数据才可插入进表A中的字段。
+注：如果此处需要预先建立表，请在A表中间为B表建立一个Pointer属性的列。如果没有进行预先建表，我们会在第一条数据产生时，自动生成一张符合数据类型的表
+例如：一条微博信息可能会对应多条评论。创建一条微博信息并对应一条评论信息，你可以这样写：</p><pre><code>// 创建微博信息
+AVObject myWeibo = new AVObject(&quot;Post&quot;);
+myWeibo.put(&quot;content&quot;, &quot;吃了吗。&quot;);
+
+// 创建评论信息
+AVObject myComment = new AVObject(&quot;Comment&quot;);
+myComment.put(&quot;content&quot;, &quot;吃了，你吃了吗？&quot;);
+
+// 添加一个关联的微博对象
+//如果需要预先建表，可以在Comment表中建立一个Pointer属性的post列
+myComment.put(&quot;post&quot;, myWeibo);
+
+// 这将保存两条数据，分别为微博信息和评论信息
+myComment.saveInBackground();</code></pre><p>你也可以通过objectId来关联已有的对象：</p><pre><code>// Add a relation between the Post with objectId &quot;1zEcyElZ80&quot; and the comment
+myComment.put(&quot;post&quot;, AVObject.createWithoutData(&quot;Post&quot;, &quot;1zEcyElZ80&quot;));</code></pre><p>默认情况下，当你获取一个对象的时候，关联的 <code>AVObject</code> 不会被获取。这些对象的值无法获取，直到他们调用 <code>fetch</code>:</p><pre><code>fetchedComment.getAVObject(&quot;post&quot;)
+    .fetchIfNeededInBackground(new GetCallback&lt;AVObject&gt;() {
+        public void done(AVObject object, AVException e) {
+          String title = post.getString(&quot;title&quot;);
+        }
+    });</code></pre><p>同样，你可以使用 <code>AVRelation</code> 来建模多对多关系。这有点像List链表，但是你不需要一次性下载关系中的所有的 <code>AVObject</code>。这使得 <code>AVRelation</code> 比链表的方式可以更好地扩展到更多的对象。例如，一个 <code>User</code> 喜欢很多 <code>Post</code>。这种情况下，你可以用 <code>getRelation</code> 方法保存一个用户喜欢的所有Post集合。为了添加一个喜欢的 <code>Post</code> 到链表，你可以这样做：</p><pre><code>AVUser user = AVUser.getCurrentUser();
+AVRelation&lt;AVObject&gt; relation = user.getRelation(&quot;likes&quot;);
+relation.add(post);
+user.saveInBackground();</code></pre><p>你可以从AVRelation中移除一个Post:</p><pre><code>relation.remove(post);</code></pre><p>默认情况下，处于关系中的对象集合不会被下载。你可以通过 <code>getQuery</code> 方法返回的 AVQuery<code>对象，使用它的</code>findInBackground` 方法来获取Post链表，像这样：</p><pre><code>relation.getQuery().findInBackground(new FindCallback&lt;AVObject&gt;() {
+    void done(List&lt;AVObject&gt; results, AVException e) {
+      if (e != null) {
+        // There was an error
+      } else {
+        // results have all the Posts the current user liked.
+      }
+    }
+});</code></pre><p>如果你只想获取链表的一个子集合，你可以添加更多的约束条件到 <code>getQuery</code> 返回 <code>AVQuery</code> 对象上，例如：</p><pre><code>AVQuery&lt;AVObject&gt; query = relation.getQuery();
+// 在query对象上可以添加更多查询约束</code></pre><p>如果你已经持有一个post对象，想知道它被哪些User所喜欢，你可以反向查询，像这样：</p><pre><code>//假设myPost是已知的Post对象
+AVQuery&lt;AVObject&gt; userQuery = AVRelation.reverseQuery(&quot;_User&quot;,&quot;likes&quot;,myPost);
+userQuery.findInBackground(new FindCallback&lt;AVObject&gt;() {
+            @Override
+            public void done(List&lt;AVObject&gt; users, AVException avException) {
+                //查询出来的喜欢myPost的User列表。
+            }
+        });</code></pre><p><code>AVRelation.reverseQuery</code>返回的 <code>AVQuery</code> 对象还可以添加更多的查询约束条件。</p><p>更多关于 <code>AVQuery</code> 的信息，请看本指南的查询部分。查询的时候，一个 <code>AVRelation</code> 对象运作起来像一个对象链表，因此任何你作用在链表上的查询（除了incldue），都可以作用在 <code>AVRelation</code>上。</p><h3 id="&#x6570;&#x636E;&#x7C7B;&#x578B;">数据类型</h3><p>目前为止，我们支持的数据类型有String、Int、Boolean、以及AVObject对象类型。同时LeanCloud也支持java.util.Date、byte[]数组、JSONObject、JSONArray数据类型。
+你可以在JSONArray对象中嵌套JSONObject对象存储在一个AVObject中。
+以下是一些例子：</p><pre><code>int myNumber = 42;
+String myString = &quot;the number is &quot; + myNumber;
+Date myDate = new Date();
+
+JSONArray myArray = new JSONArray();
+myArray.put(myString);
+myArray.put(myNumber);
+
+JSONObject myObject = new JSONObject();
+myObject.put(&quot;number&quot;, myNumber);
+myObject.put(&quot;string&quot;, myString);
+
+byte[] myData = { 4, 8, 16, 32 };
+
+AVObject myObject = new AVObject(&quot;DataTypeTest&quot;);
+myObject.put(&quot;myNumber&quot;, myNumber);
+myObject.put(&quot;myString&quot;, myString);
+myObject.put(&quot;myDate&quot;, myDate);
+myObject.put(&quot;myData&quot;, myData);
+myObject.put(&quot;myArray&quot;, myArray);
+myObject.put(&quot;myObject&quot;, myObject);
+myObject.put(&quot;myNull&quot;, JSONObject.NULL);
+myObject.saveInBackground();</code></pre><p>我们不建议存储较大的二进制数据，如图像或文件不应使用AVObject的byte[]字段类型。AVObject 的大小不应超过 128KB。如果需要存储较大的文件类型如图像、文件、音乐,可以使用AVFile对象来存储，具体使用方法可见<a href="#%E6%96%87%E4%BB%B6">AVFile指南部分</a>。
+关于处理数据的更多信息，可查看开发指南的数据安全部分。</p><h2 id="&#x67E5;&#x8BE2;">查询</h2><h3 id="&#x57FA;&#x672C;&#x67E5;&#x8BE2;">基本查询</h3><p>在许多情况下，getInBackground是不能检索到符合你的要求的数据对象的。AVQuery提供了不同的方法来查询不同条件的数据。
+使用AVQuery时，先创建一个AVQuery对象，然后添加不同的条件，使用findInBackground方法结合FindCallback回调类来查询与条件匹配的AVObject数据。例如，查询指定人员的信息，使用whereEqualTo方法来添加条件值：</p><pre><code>AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;GameScore&quot;);
+query.whereEqualTo(&quot;playerName&quot;, &quot;steve&quot;);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+    public void done(List&lt;AVObject&gt; avObjects, AVException e) {
+        if (e == null) {
+            Log.d(&quot;成功&quot;, &quot;查询到&quot; + avObjects.size() + &quot; 条符合条件的数据&quot;);
+        } else {
+            Log.d(&quot;失败&quot;, &quot;查询错误: &quot; + e.getMessage());
+        }
+    }
+});</code></pre><p>findInBackground方法是在后台线程中执行查询数据操作，它和getInBackground的运行方式是一样的。如果你已经运行在一个后台上，那么你可以在你的后台线程中直接使用query.find()方法来获取数据：</p><pre><code>// 如果你的代码已经运行在一个后台线程，或只是用于测试的目的，可以使用如下方式。
+AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;GameScore&quot;);
+query.whereEqualTo(&quot;playerName&quot;, &quot;steve&quot;);
+try {
+    List&lt;AVObject&gt; avObjects = query.find();
+} catch (AVException e) {
+    Log.d(&quot;失败&quot;, &quot;查询错误: &quot; + e.getMessage());
+}</code></pre><h3 id="&#x67E5;&#x8BE2;&#x6761;&#x4EF6;">查询条件</h3><p>如果要过滤掉特定键的值时可以使用whereNotEqualTo方法。比如需要查询playerName不等于“steve”的数据时可以这样写：</p><pre><code>query.whereNotEqualTo(&quot;playerName&quot;, &quot;steve&quot;);</code></pre><p>当然，你可以在你的查询操作中添加多个约束条件（这些条件是and关系），来查询符合你要求的数据。</p><pre><code>query.whereNotEqualTo(&quot;playerName&quot;, &quot;steve&quot;);
+query.whereGreaterThan(&quot;age&quot;, 18);</code></pre><p>有些时候，在数据比较多的情况下，你希望只查询符合要求的多少条数据即可，这时可以使用setLimit方法来限制查询结果的数据条数。默认情况下Limit的值为100，最大1000，在 0 到 1000 范围之外的都强制转成默认的 100。</p><pre><code>query.setLimit(10); // 限制最多10个结果</code></pre><p>在数据较多的情况下，分页显示数据是比较合理的解决办法，setKip方法可以做到跳过首次查询的多少条数据来实现分页的功能。</p><pre><code>query.setSkip(10); // 忽略前10个</code></pre><p>对应数据的排序，如数字或字符串，你可以使用升序或降序的方式来控制查询数据的结果顺序：</p><pre><code>// 根据score字段升序显示数据
+query.orderByAscending(&quot;score&quot;);
+
+// 根据score字段降序显示数据
+query.orderByDescending(&quot;score&quot;);
+//各种不同的比较查询：
+// 分数 &lt; 50
+query.whereLessThan(&quot;score&quot;, 50);
+
+//分数 &lt;= 50
+query.whereLessThanOrEqualTo(&quot;score&quot;, 50);
+
+//分数 &gt; 50
+query.whereGreaterThan(&quot;score&quot;, 50);
+
+//分数 &gt;= 50
+query.whereGreaterThanOrEqualTo(&quot;score&quot;, 50);</code></pre><p>如果你想查询匹配几个不同值的数据，如：要查询“steve”，“chard”，“vj”三个人的成绩时，你可以使用whereContainedIn（类似SQL中的in查询）方法来实现。</p><pre><code>String[] names = {&quot;steve&quot;, &quot;chard&quot;, &quot;vj&quot;};
+query.whereContainedIn(&quot;playerName&quot;, Arrays.asList(names));</code></pre><p>相反，你想查询排除“steve”，“chard”，“vj”这三个人的其他同学的信息（类似SQL中的not in查询），你可以使用
+whereNotContainedIn方法来实现。</p><pre><code>String[] names = {“steve”，“chard”，“vj”};
+query.whereNotContainedIn(&quot;playerName&quot;, Arrays.asList(names));</code></pre><p>对字符串值的查询
+查询包含字符串的值，有几种方法。你可以使用任何正确的正则表达式来检索相匹配的值，使用whereMatches方法：</p><pre><code>// 比较name字段的值是以大写字母和数字开头
+AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;GameScore&quot;);
+query.whereMatches(&quot;name&quot;, &quot;^[A-Z]\\d&quot;);
+
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+    public void done(List&lt;AVObject&gt; sauceList, AVException e) {
+
+    }
+});</code></pre><p>查询字符串中包含“XX“内容，可用如下方法：</p><pre><code>// 查询playerName字段的值中包含“ste“字的数据
+AVQuery query = new AVQuery(&quot;GameSauce&quot;);
+query.whereContains(&quot;playerName&quot;, &quot;ste&quot;);
+
+// 查询playerName字段的值是以“cha“字开头的数据
+AVQuery query = new AVQuery(&quot;GameSauce&quot;);
+query.whereStartsWith(&quot;playerName&quot;, &quot;cha&quot;);
+
+// 查询playerName字段的值是以“vj“字结尾的数据
+AVQuery query = new AVQuery(&quot;GameSauce&quot;);
+query.whereEndsWith(&quot;playerName&quot;, &quot;vj&quot;);</code></pre><h3 id="&#x6570;&#x7EC4;&#x503C;&#x7684;&#x67E5;&#x8BE2;">数组值的查询</h3><p>如果一个Key对应的值是一个数组，你可以查询key的数组包含了数字2的所有对象，通过：</p><pre><code>// 查找出所有arrayKey对应的数组同时包含了数字2的所有对象
+query.whereEqualTo(&quot;arrayKey&quot;, 2);</code></pre><p>同样，你可以查询出Key的数组同时包含了2,3和4的所有对象：</p><pre><code>//查找出所有arrayKey对应的数组同时包含了数字2,3,4的所有对象。
+ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;Integer&gt;();
+numbers.add(2);
+numbers.add(3);
+numbers.add(4);
+query.whereContainsAll(&quot;arrayKey&quot;, numbers);</code></pre><h3 id="&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x67E5;&#x8BE2;">字符串的查询</h3><p>使用whereStartsWith方法来限制字符串的值以另一个字符串开头。非常类似MySQL的LIKE查询，这样的查询会走索引，因此对于大数据集也一样高效：</p><pre><code>//查找出所有username以avos开头的用户
+AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;_User&quot;);
+query.whereStartsWith(&quot;username&quot;, &quot;avos&quot;);</code></pre><h3 id="&#x67E5;&#x8BE2;&#x5BF9;&#x8C61;&#x4E2A;&#x6570;">查询对象个数</h3><p>如果你只是想统计有多少个对象满足查询，你并不需要获取所有匹配的对象，可以直接使用count替代find。例如，查询一个特定玩家玩了多少场游戏：</p><pre><code>AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;GameScore&quot;);
+query.whereEqualTo(&quot;playerName&quot;, &quot;Sean Plott&quot;);
+query.countInBackground(new CountCallback() {
+  public void done(int count, AVException e) {
+    if (e == null) {
+      // The count request succeeded. Log the count
+      Log.d(&quot;score&quot;, &quot;Sean has played &quot; + count + &quot; games&quot;);
+    } else {
+      // The request failed
+    }
+  }
+});</code></pre><p>如果你想阻塞当前的调用线程，你可以使用同步版本的count()方法。</p><p>对于超过1000个对象的查询，这种计数请求可能被超时限制。他们可能遇到超时错误或者返回一个近似的值。因此，请仔细设计你的应用架构来避免依赖这种计数查询。</p><h3 id="&#x5173;&#x7CFB;&#x67E5;&#x8BE2;">关系查询</h3><p>有好几种方式可以发起关系数据的查询。如果你想获取某个字段匹配特定AVObject的对象列表，你可以像查询其他数据类型那样使用whereEqualTo来查询。例如，如果每个Comment对象都包含一个Post对象在它的post字段上，你可以获取特定Post的Comment列表：</p><pre><code>// 假设AVObject myPost已经在前面创建
+AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;Comment&quot;);
+query.whereEqualTo(&quot;post&quot;, myPost);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+  public void done(List&lt;AVObject&gt; commentList, AVException e) {
+    // commentList now has the comments for myPost
+  }
+});</code></pre><p>如果你想查询对象列表，它们的某个字段包含了一个AVObject，并且这个AVObject匹配一个不同的查询，你可以使用whereMatchesQuery方法。请注意，默认的limit限制100也同样作用在内部查询上。因此如果是大规模的数据查询，你可能需要仔细构造你的查询对象来获取想要的行为。例如，为了查询post有图片的评论列表：</p><pre><code>AVQuery&lt;AVObject&gt; innerQuery = AVQuery.getQuery(&quot;Post&quot;);
+innerQuery.whereExists(&quot;image&quot;);
+AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;Comment&quot;);
+query.whereMatchesQuery(&quot;post&quot;, innerQuery);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+  public void done(List&lt;AVObject&gt; commentList, AVException e) {
+    // comments now contains the comments for posts with images.
+  }
+});</code></pre><p>反之，不想匹配某个子查询，你可以使用whereDoesNotMatchQuery方法。 比如为了查询没有图片的post的评论列表：</p><pre><code>AVQuery&lt;AVObject&gt; innerQuery = AVQuery.getQuery(&quot;Post&quot;);
+innerQuery.whereExists(&quot;image&quot;);
+AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;Comment&quot;);
+query.whereDoesNotMatchQuery(&quot;post&quot;, innerQuery);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+  public void done(List&lt;AVObject&gt; commentList, AVException e) {
+    // comments now contains the comments for posts without images.
+  }
+});</code></pre><p>在某些情况下，你想在一个查询内返回多种类型的关联对象。你可以使用include方法。例如。你想获取最近的10条评论，同时包括它们关联的post:</p><pre><code>AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(&quot;Comment&quot;);
+// 获取最新的评论
+query.orderByDescending(&quot;createdAt&quot;);
+// 限制在10条。
+query.setLimit(10);
+// 同时获取包含的post
+query.include(&quot;post&quot;);
+
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+  public void done(List&lt;AVObject&gt; commentList, AVException e) {
+    for (AVObject comment : commentList) {
+      //这里将不需要再来一次网络访问就可以访问到post的属性
+      AVObject post = comment.getAVObject(&quot;post&quot;);
+      Log.d(&quot;post&quot;, &quot;retrieved a related post&quot;);
+    }
+  }
+});</code></pre><p>你可以使用dot（英语句号）操作符来多层include内嵌的对象。比如，你同时想include一个Comment的post里的author（作者）对象，你可以这样做：</p><pre><code>query.include(&quot;post.author&quot;);</code></pre><p>AVQuery的include方法可以被多次调用，每次调用的字段可以不一样。同样，上面所述的这些方法也可以作用在AVQuery的其他方法，例如getFirst和getInBackground上。</p><h3 id="&#x7F13;&#x5B58;&#x67E5;&#x8BE2;">缓存查询</h3><p>经常需要缓存一些查询的结果到磁盘上，这可以让你在离线的时候，或者当App刚启动，网络请求还没有足够时间完成的时候可以展现一些数据给用户。LeanCloud 会自动清空缓存，当缓存占用了太多空间的时候。</p><p>默认情况下的查询不会使用缓存，除非你使用<code>setCachePolicy</code>方法明确设置启用。例如，尝试从网络请求，如果网络不可用则从缓存数据中获取，可以这样设置：</p><pre><code>query.setCachePolicy(AVQuery.CachePolicy.NETWORK_ELSE_CACHE);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+public void done(List&lt;AVObject&gt; scoreList, AVException e) {
+  if (e == null) {
+    // Results were successfully found, looking first on the
+    // network and then on disk.
+  } else {
+    // The network was inaccessible and we have no cached data
+    // for this query.
+  }
+});</code></pre><p>LeanCloud 提供了几种不同的缓存策略：</p><ul>
+<li>IGNORE_CACHE ： 默认的缓存策略，查询不走缓存，查询结果也不存储在缓存。</li>
+<li>CACHE_ONLY ： 查询只从缓存获取，不走网络。如果缓存中没有结果，引发一个AVException</li>
+<li>NETWORK_ONLY ： 查询不走缓存，从网路中获取，但是查询结果会写入缓存。</li>
+<li>CACHE_ELSE_NETWORK ： 查询首先尝试从缓存中获取，如果失败，则从网络获取，如果两者都失败，则引发一个AVException。</li>
+<li>NETWORK_ELSE_CACHE ： 查询首先尝试从网络获取，如果失败，则从缓存中查找；如果两者都失败，则应发一个AVException。</li>
+<li>CACHE_THEN_NETWORK ： 查询首先尝试从缓存中获取，然后再从网络获取。在这种情况下，FindCallback会被实际调用两次 -- 首先是缓存的结果，其次是网络查询的结果。这个缓存策略只能用在异步的<code>findInBackground</code>方法中。</li>
+</ul><p>如果你想控制缓存的行为。你可以使用AVQuery提供的方法来操作缓存。你可以在缓存上做如下这些操作：</p><ul>
+<li>检查查询是否有缓存结果：</li>
+</ul><pre><code>boolean isInCache = query.hasCachedResult();</code></pre><ul>
+<li>删除查询的任何缓存结果：</li>
+</ul><pre><code>query.clearCachedResult();</code></pre><ul>
+<li>清空所有查询的缓存结果：</li>
+</ul><pre><code>AVQuery.clearAllCachedResults();</code></pre><ul>
+<li>控制缓存结果的最大存活时间（毫秒为单位）：</li>
+</ul><pre><code>query.setMaxCacheAge(TimeUnit.DAYS.toMillis(1));</code></pre><p>查询缓存也同时可以用在AVQuery的getFirst()和getInBackground()方法上。</p><h4 id="last-modified&#x9009;&#x9879;">Last-Modified选项</h4><p>在网络请求中间Last-Modified一般是标注在http响应中，用来表示该资源在服务器端的最后修改时间。在LeanCloud 中间，我们也提供了这个选项来提升缓存的准确性、提高网络效率。
+当你通过<code>AVOSCloud.setLastModifyEnabled(boolean enable)</code>来激活这个选项时，所有的对象和它们所对应的Last-Modified时间都会被缓存起来。
+当某个AVObject对象再次被发起一个get请求时，请求中就会带着Last-Modified信息，服务器端则会校验双方的Last-Modified信息。如果双方的Last-Modified时间一致，则说明自上次get请求之后，服务器端的数据并没有被修改，所以服务器不再需要将对象重新返回，客户端直接取缓存内对象返回即可，从而节省了网络资源。反之，则与平时一样，服务器返回该对象数据和对应的Last-Modified信息，由客户端更新缓存内容并返回，从而保证了缓存的正确性。
+<strong> 注：该功能现在正处于beta阶段，请谨慎使用 </strong></p><h3 id="&#x590D;&#x5408;&#x67E5;&#x8BE2;">复合查询</h3><p>如果你想查找对象匹配所有查询条件中的一个，你可以使用<code>AVQuery.or</code>方法来构建一个复合的&quot;或&quot;查询。例如，你想查询出获胜场次很多或者很少的玩家，可以这样:</p><pre><code>AVQuery&lt;AVObject&gt; lotsOfWins = AVQuery.getQuery(&quot;Player&quot;);
+lotsOfWins.whereGreaterThan(&quot;score&quot;, 150);
+
+AVQuery&lt;AVObject&gt; fewWins = AVQuery.getQuery(&quot;Player&quot;);
+fewWins.whereLessThan(&quot;score&quot;, 5);
+
+List&lt;AVQuery&lt;AVObject&gt;&gt; queries = new ArrayList&lt;AVQuery&lt;AVObject&gt;&gt;();
+queries.add(lotsOfWins);
+queries.add(fewWins);
+
+AVQuery&lt;AVObject&gt; mainQuery = AVQuery.or(queries);
+mainQuery.findInBackground(new FindCallback&lt;AVObject&gt;() {
+  public void done(List&lt;AVObject&gt; results, AVException e) {
+    // results has the list of players that win a lot or haven&#39;t won much.
+  }
+});</code></pre><p>你还可以添加更多的约束条件到新创建的AVQuery对象上，表示一个<code>and</code>查询操作。</p><p>请注意，我们在复合查询的子查询里不支持非过滤性的查询，例如setLimit,skip, orderBy..., include等。</p><h3 id="&#x5220;&#x9664;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;">删除查询结果</h3><p>如果你想根据查询条件来删除对象，或者删除查询出来的所有对象，可以调用AVQuery.deleteAll()方法：</p><pre><code>query.deleteAll();</code></pre><h3 id="cql&#x67E5;&#x8BE2;">CQL查询</h3><p>Cloud Query Language（简称 CQL） 是 LeanCloud 为查询 API 定制的一套类似 SQL 查询语法的子集和变种，主要目的是降低大家学习 LeanCloud 查询的 API 的成本，可以使用传统的 SQL 语法来查询 LeanCloud 应用内的数据。
+这里只是示范在Android中的调用方法，具体的CQL语法，请参考<a href="https://leancloud.cn/docs/cql_guide.html">Cloud Query Language 详细指南</a>.
+你可以通过一下方法来进行调用</p><pre><code>AVQuery.doCloudQueryInBackground(&quot;select * from ObjectTest&quot;,new CloudQueryCallback&lt;AVCloudQueryResult&gt;(){
+
+          @Override
+          public void done(AVCloudQueryResult result, AVException cqlException) {
+             if(cqlException==null){
+             result.getResults();//这里是你查询到的结果
+             }
+          }
+
+});
+
+AVQuery.doCloudQueryInBackground(&quot;select count(*) from ObjectTest&quot;,new CloudQueryCallback&lt;AVCloudQueryResult&gt;(){
+
+
+          @Override
+          public void done(AVCloudQueryResult result, AVException cqlException) {
+                 if(cqlException==null){
+                 result.getCount();//这里你就可以得到符合条件的count
+                 }
+          }
+
+});</code></pre><h2 id="&#x5B50;&#x7C7B;&#x5316;">子类化</h2><p>LeanCloud 希望设计成能让人尽快上手并使用。你可以通过AVObject.get方法访问所有的数据。但是在很多现有成熟的代码中，子类化能带来更多优点，诸如简洁、可扩展性以及IDE提供的代码自动完成的支持等等。子类化不是必须的，你可以将下列代码转化：</p><pre><code>AVObject shield = new AVObject(&quot;Armor&quot;);
+shield.put(&quot;displayName&quot;, &quot;Wooden Shield&quot;);
+shield.put(&quot;fireproof&quot;, false);
+shield.put(&quot;rupees&quot;, 50);</code></pre><p>成这样：</p><pre><code>Armor shield = new Armor();
+shield.setDisplayName(&quot;Wooden Shield&quot;);
+shield.setFireproof(false);
+shield.setRupees(50);</code></pre><h3 id="&#x5B50;&#x7C7B;&#x5316;-avobject">子类化 AVObject</h3><p>创建一个AVObject的子类很简单：</p><ul>
+<li>首先声明一个子类继承自AVobject。</li>
+<li>添加<code>@AVClassName</code>注解。它的值必须是一个字符串，也就是你过去传入AVObject构造函数的类名。这样以来，后续就不需要再在代码中出现这个字符串类名。</li>
+<li>确保你的子类有一个public的默认（参数个数为0）的构造函数。切记不要在构造函数里修改任何AVObject的字段。</li>
+<li>在你的应用初始化的地方，在调用<code>AVOSCloud.initialize()</code>之前注册子类<code>AVObject.registerSubclass(YourClass.class)</code>。</li>
+</ul><p>下列代码成功实现并注册了AVObject的子类Armor:</p><pre><code>// Armor.java
+import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVObject;
+
+@AVClassName(&quot;Armor&quot;)
+public class Armor extends AVObject {
+}
+
+// App.java
+import com.avos.avoscloud.AVOSCloud;
+import android.app.Application;
+
+public class App extends Application {
+  @Override
+  public void onCreate() {
+    super.onCreate();
+
+    AVObject.registerSubclass(Armor.class);
+    AVOSCloud.initialize(this, &quot;{{appid}}&quot;, &quot;{{appkey}}&quot;);
+  }
+}</code></pre><p>还可以参考这个 <a href="https://github.com/avoscloud/Android-SDK-demos/blob/master/AVOSCloud-Todo/src/com/avos/demo/Todo.java">Todo.java</a> 以及 <a href="https://github.com/avoscloud/Android-SDK-demos/blob/master/AVOSCloud-Todo/src/com/avos/demo/AVService.java">AVService.java</a>中的<code>AVInit</code>函数。</p><h3 id="&#x8BBF;&#x95EE;&#x5668;&#xFF0C;&#x4FEE;&#x6539;&#x5668;&#x548C;&#x65B9;&#x6CD5;">访问器，修改器和方法</h3><p>添加方法到AVObject的子类有助于封装类的逻辑。你可以将所有跟子类有关的逻辑放到一个地方，而不是分成多个类来分别处理商业逻辑和存储/转换逻辑。</p><p>你可以很容易地添加访问器和修改器到你的AVObject子类。像平常那样声明字段的getter和setter方法，但是通过AVobject的get和put方法来实现它们。下面是这个例子为Armor类创建了一个displayName的字段：</p><pre><code>// Armor.java
+@AVClassName(&quot;Armor&quot;)
+public class Armor extends AVObject {
+  public String getDisplayName() {
+    return getString(&quot;displayName&quot;);
+  }
+  public void setDisplayName(String value) {
+    put(&quot;displayName&quot;, value);
+  }
+}</code></pre><p>现在你就可以使用<code>armor.getDisplayName()</code>方法来访问displayName字段，并通过<code>armor.setDisplayName(&quot;Wooden Sword&quot;)</code>来修改它。这样就允许你的IDE提供代码自动完成功能，并且可以在编译时发现到类型错误。</p><p>各种数据类型的访问器和修改器都可以这样被定义，使用各种get()方法的变种，例如getInt(), getAVFile(),或者getMap()。</p><p>如果你不仅需要一个简单的访问器，而是有更复杂的逻辑，你可以实现自己的方法，例如：</p><pre><code>public void takeDamage(int amount) {
+  // 递减armor的durability字段，并判断是否应该设置broken状态
+  increment(&quot;durability&quot;, -amount);
+  if (getDurability() &lt; 0) {
+    setBroken(true);
+  }
+}</code></pre><h3 id="&#x521D;&#x59CB;&#x5316;&#x5B50;&#x7C7B;">初始化子类</h3><p>你可以使用你自定义的构造函数来创建你的子类对象。你的子类必须定义一个公开的默认构造函数，并且不修改任何父类AVObject中的字段，这个默认构造函数将会被SDK使用来创建子类的强类型的对象。</p><p>要创建一个到现有对象的引用，可以使用<code>AVObject.createWithoutData()</code>:</p><pre><code>Armor armorReference = AVObject.createWithoutData(Armor.class, armor.getObjectId());</code></pre><h3 id="&#x67E5;&#x8BE2;&#x5B50;&#x7C7B;">查询子类</h3><p>你可以通过<code>AVObject.getQuery()</code>或者<code>AVQuery.getQuery</code>的静态方法获取特定的子类的查询对象。下面的例子就查询了用户能够购买的盔甲(Armor)列表：</p><pre><code>AVQuery&lt;Armor&gt; query = AVObject.getQuery(Armor.class);
+//rupees是游戏货币
+query.whereLessThanOrEqualTo(&quot;rupees&quot;, AVUser.getCurrentUser().get(&quot;rupees&quot;));
+query.findInBackground(new FindCallback&lt;Armor&gt;() {
+  @Override
+  public void done(List&lt;Armor&gt; results, AVException e) {
+    for (Armor a : results) {
+      // ...
+    }
+  }
+});</code></pre><p>还可以参考<a href="https://github.com/avoscloud/Android-SDK-demos/blob/master/AVOSCloud-Todo/src/com/avos/demo/AVService.java">AVService.java</a>的<code>findTodos</code>函数。</p><h3 id="avuser-&#x7684;&#x5B50;&#x7C7B;&#x5316;">AVUser 的子类化</h3><p>AVUser作为AVObject的子类，同样允许子类化，你可以定义自己的User对象，不过比起AVObject子类化会更简单一些，只要继承AVUser就可以了：</p><pre><code>import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVUser;
+
+public class MyUser extends AVUser {
+    public void setNickName(String name) {
+  this.put(&quot;nickName&quot;, name);
+    }
+
+    public String getNickName() {
+  return this.getString(&quot;nickName&quot;);
+    }
+}</code></pre><p>不需要添加<code>@AVClassname</code>注解，所有AVUser的子类的类名都是内建的<code>_User</code>。同样也不需要注册MyUser。</p><p>注册跟普通的AVUser对象没有什么不同，但是登陆如果希望返回自定义的子类，必须这样：</p><pre><code>MyUser cloudUser = AVUser.logIn(username, password,
+        MyUser.class);</code></pre><h2 id="acl&#x6743;&#x9650;&#x63A7;&#x5236;">ACL权限控制</h2><p>ACL(Access Control List)是最灵活和简单的应用数据安全管理方法。通俗的解释就是为每一个数据创建一个访问的白名单列表，只有在名单上的用户(AVUser)或者具有某种角色(AVRole)的用户才能被允许访问。为了更好地保证用户数据安全性，LeanCloud表中每一张都有一个ACL列。当然，LeanCloud还提供了进一步的读写权限控制。一个 User 必须拥有读权限（或者属于一个拥有读权限的 Role）才可以获取一个对象的数据，同时，一个 User 需要写权限（或者属于一个拥有写权限的 Role）才可以更改或者删除一个对象。
+以下列举了几种在LeanCloud常见的ACL使用范例：</p><h3 id="&#x9ED8;&#x8BA4;&#x8BBF;&#x95EE;&#x6743;&#x9650;">默认访问权限</h3><p>在没有显式指定的情况下，LeanCloud中的每一个对象都会有一个默认的ACL值。这个值代表了，所有的用户，对这个对象都是可读可写的。此时你可以在数据管理的表中ACL属性中看到这样的值:</p><pre><code>        {&quot;*&quot;:{&quot;read&quot;:true,&quot;write&quot;:true}}</code></pre><p>而在安卓代码中，这样的值对应的代码是：</p><pre><code>        AVACL  acl = new AVACL();
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true);</code></pre><p>当然正如上文提到的，默认的ACL并不需要显式的指定。</p><h3 id="&#x6307;&#x5B9A;&#x7528;&#x6237;&#x8BBF;&#x95EE;&#x6743;&#x9650;">指定用户访问权限</h3><p>当一个用户在实现一个网盘类应用时，针对不同文件的私密性，用户就需要不同的文件访问权限。
+譬如公开的文件，每一个其他用户都有读的权限，然后仅仅只有创建者才拥有更改和删除的权限。</p><pre><code>      AVObject record = new AVObject(&quot;霍乱时期的爱情&quot;);
+      record.put(&quot;file&quot;, thisIsAnAVFile);
+
+      AVACL acl = new AVACL();
+      acl.setPublicReadAccess(true);//此处设置的是所有人的可读权限
+      acl.setWriteAccess(AVUser.getCurrentUser(), true);//而这里设置了文件创建者的写权限
+
+      record.setACL(acl);
+      record.save();</code></pre><p>当然用户也会上传一些隐私文件,只有这些文件的创建者才对这些文件拥有读写权限</p><pre><code>      AVObject record = new AVObject(&quot;AtlantisCold&quot;);
+      record.put(&quot;file&quot;, thisIsAnotherAVFile);
+
+      AVACL acl = new AVACL();
+      acl.setReadAccess(AVUser.getCurrentUser(),true);
+      acl.setWriteAccess(AVUser.getCurrentUser(), true);
+
+      record.setACL(acl);
+      record.save();</code></pre><p><strong>注：一旦显式设置ACL，默认的ACL就会被覆盖</strong></p><h3 id="&#x6307;&#x5B9A;&#x89D2;&#x8272;&#x8BBF;&#x95EE;&#x6743;&#x9650;">指定角色访问权限</h3><h4 id="avuser&#x4E0E;avrole&#x7684;&#x4ECE;&#x5C5E;&#x5173;&#x7CFB;">AVUser与AVRole的从属关系</h4><p>指定用户访问权限虽然很方便，但是依然会有局限性。
+以工资系统为例，一家公司的工资系统，工资最终的归属者和公司的出纳们只拥有工资的读权限，而公司的人事和老板才拥有全部的读写权限。当然你可以通过多次设置指定用户的访问权限来实现这一功能（多个用户的ACL设置是追加的而非覆盖）。</p><pre><code>        AVObect salary = new AVObject(&quot;工资&quot;);
+        salary.put(&quot;value&quot;,200000000000);
+
+        AVUser boss;//假设此处为老板
+        AVUser hrWang;  //人事小王
+        AVUser me; //我们就在文档里爽一爽吧
+        AVUser cashierZhou; //出纳老周
+
+        AVACL acl = new AVACL();
+        acl.setReadAccess(boos,true);
+        acl.setReadAccess(hrWang,true);
+        acl.setReadAccess(me,true);
+        acl.setReadAccess(cashierZhou,true);
+
+        acl.setWriteAccess(boss,true);
+        acl.setWriteAccess(hrWang,true);
+
+        salary.setACL(acl);
+        salary.save();</code></pre><p>但是这些涉及其中的人可能不止一个，也有离职换岗新员工的问题存在。这样的代码既不优雅，也太啰嗦,同样会很难维护。
+这个时候我们就引入了AVRole来解决这个问题。
+公司的员工可以成百上千，然而一个公司组织里的角色却能够在很长一段时间时间内相对稳定。</p><pre><code>        AVObect salary = new AVObject(&quot;工资&quot;);
+        salary.put(&quot;value&quot;,200000000000);
+
+        AVUser boss;//假设此处为老板
+        AVUser hrWang;  //人事小王
+        AVUser me;
+        AVUser cashierZhou; //出纳老周
+        AVUser cashierGe;//出纳小葛
+
+        //这段代码可能放在员工管理界面更恰当，但是为了示意，我们就放在这里
+        AVRole hr = new AVRole(&quot;hr&quot;);
+        AVRole cashier = new AVRole(&quot;cashier&quot;);
+
+        hr.getUsers().add(hrWang);
+        hr.save();
+        cashier.getUsers().add(cashierZhou);//此处对应的是AVRole里面有一个叫做users的Relation字段
+        cashier.getUsers().add(cashierGe);
+        cashier.save();
+
+        AVACL acl = new AVACL();
+        acl.setReadAccess(boos,true);//老板假设只有一个
+        acl.setReadAccess(me,true);
+        acl.setRoleReadAccess(hr,true);
+        acl.setRoleReadAccess(cashier,true);
+
+        acl.setWriteAccess(boss,true);
+        acl.setRoleWriteAccess(hr,true);
+
+        salary.setACL(acl);
+        salary.save();</code></pre><p>当然如果考虑到一个角色(<code>AVRole</code>)里面有多少员工(<code>AVUser</code>)，编辑这些员工可需要做权限控制，<code>AVRole</code>同样也有<code>setACL</code>方法可以使用。</p><h4 id="avrole&#x4E4B;&#x95F4;&#x7684;&#x4ECE;&#x5C5E;&#x5173;&#x7CFB;">AVRole之间的从属关系</h4><p>在讲清楚了用户与角色的关系后，我们还有一层角色与角色之间的关系。用下面的例子来理解可能会对我们有所帮助：</p><p>一家创业公司有移动部门，部门下面有不同的小组，Android和iOS。而每个小组只拥有自己组的代码的读写权限。但是他们同时拥有核心库代码的读取权限。</p><pre><code>        AVRole androidTeam = new AVRole(&quot;androidTeam&quot;);
+        AVRole iOSTeam = new AVRole(&quot;iOSTeam&quot;);
+        AVRole mobileDep = new AVRole(&quot;mobileDep&quot;);
+
+        androidTeam.save();
+        iOSTeam.save();
+
+        mobileDep.getRoles().add(androidTeam);
+        mobileDep.getRoles().add(iOSTeam);
+        mobileDep.save();
+
+        AVObject androidCode = new AVObject(&quot;code&quot;);
+        AVObject iOSCode = new AVObject(&quot;code&quot;);
+        AVObject coreCode = new AVObject(&quot;code&quot;);
+        //.....此处省略一些具体的值设定
+        androidCode.save();
+        iOSCode.save();
+        coreCode.save();
+
+        androidCode.setRoleReadAccess(androidTeam,true);
+        androidCode.setRoleWriteAccess(androidTeam,true);
+
+        iOSCode.setRoleReadAccess(iOSTeam,true);
+        iOSCode.setRoleWriteAccess(iOSTeam,true);
+
+        coreCode.setRoleReadAccess(mobileDep);</code></pre><h2 id="&#x6587;&#x4EF6;">文件</h2><h3 id="&#x6587;&#x4EF6;&#x5BF9;&#x8C61;">文件对象</h3><p>AVFile可以让你的应用程序将文件存储到服务器中，比如常见的文件类型图像文件、影像文件、音乐文件和任何其他二进制数据都可以使用。
+在这个例子中，我们将一段文本保存到服务器端：</p><pre><code>AVFile avFile;
+try{
+       AVObject avObject = new AVObject(&quot;JobApplication&quot;);
+       avFile = new AVFile(&quot;JobApplication&quot;, &quot;hello world&quot;.getBytes());
+       avFile.save();
+       avObject.put(&quot;applicatName&quot;,&quot;steve&quot;);
+       avObject.put(&quot;applicatFile&quot;, avFile);
+       avObject.saveInBackground();
+}catch(AVException  e){
+}</code></pre><p>AVFile构造函数的第一个参数指定文件名称，第二个构造函数接收一个byte数组，也就是将要上传文件的二进制。</p><p>可以将AVFile直接存储到其他对象的某个属性里，后续可以取出来继续使用。</p><p><strong>如果将文件存储到对象的一个数组类型的属性内，那么必须在查询该对象的时候加上include该属性，否则查询出来的数组将是AVObject数组。</strong>p><h3 id="&#x4E0A;&#x4F20;&#x6587;&#x4EF6;">上传文件</h3><p>除了可以上传一段二进制数据，你可以上传一个本地磁盘上（SD卡等）的文件，例如：</p><pre><code>AVFile file = AVFile.withAbsoluteLocalPath(&quot;test.jpg&quot;, Environment.getExternalStorageDirectory() + &quot;/test.jpg&quot;);
+file.saveInBackground();</code></pre><p>此外还有<code>withFile</code>方法可接收一个<code>java.io.File</code>对象用于上传。</p><h3 id="&#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;">上传进度</h3><p>AVFile的<code>saveInBackground</code>方法除了可以传入一个<code>SaveCallback</code>回调来通知上传成功或者失败之外，还可以传入第二个参数<code>ProgressCallback</code>回调对象，通知上传进度：</p><pre><code>file.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(AVException e) {
+        if(e!=null){
+            //上传失败
+        }else{
+            //上传成功
+        }
+      }
+  }, new ProgressCallback() {
+      @Override
+      public void done(Integer percentDone) {
+          //打印进度
+        System.out.println(&quot;uploading: &quot; + percentDone);
+      }
+       });</code></pre><h3 id="&#x4E0B;&#x8F7D;&#x6587;&#x4EF6;">下载文件</h3><p>下载文件调用<code>AVFile.getDataInBackground</code>方法就可以：</p><pre><code>AVFile avFile = avObject.getAVFile(&quot;applicatFile&quot;);
+AVFile.getDataInBackground(new GetDataCallback(){
+  public void done(byte[] data, AVException e){
+    //process data or exception.
+  }
+});</code></pre><p>或者得到文件的url自行处理下载：</p><pre><code>  String url=avFile.getUrl();</code></pre><h3 id="&#x6587;&#x4EF6;&#x5143;&#x4FE1;&#x606F;">文件元信息</h3><p>AVFile默认会存储文件大小和文件上传者objectId作为元信息：</p><pre><code>int size = avFile.getSize();
+String ownerObjectId = avFile.getOwnerObjectId();</code></pre><p>你还可以在上传前自动一些元信息保存起来，以便后续获取，例如我们还保存图片的高度和宽度：</p><pre><code>avFile.addMetaData(&quot;width&quot;, 100);
+avFile.addMetaData(&quot;height&quot;, 200);</code></pre><p>以后就可以通过getMetaData方法获取元信息。</p><h3 id="&#x5220;&#x9664;&#x6587;&#x4EF6;">删除文件</h3><p>默认情况下，文件的删除权限是不开放的，如果你想在客户端SDK中删除文件，你需要在数据管理平台找到_File表，进入 其他 -&gt; 权限设置 菜单，勾选delete为所有用户都有此权限。</p><p>删除文件通过一系列delete方法来实现，跟AVObject的删除类似：</p><pre><code>avFile.deleteInBackground();</code></pre><h3 id="&#x56FE;&#x7247;&#x7F29;&#x7565;&#x56FE;">图片缩略图</h3><p>如果你上传的文件是一张图片，可以通过AVFile的<code>getThumbnailUrl</code>方法获取一张缩略图的url，可以设置缩率图的高度、宽度、质量等信息：</p><pre><code>//宽度200，高度100的缩略图
+String url = file.getThumbnailUrl(false, 200, 100);</code></pre><p><code>getThumbnailUrl</code>方法还有一个重载方法接收更多选项，包括质量、格式、保真等等，具体见javadoc。</p><h3 id="&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x540D;">获取文件名</h3><p>有用户反映从服务器拿到的AVFile在获取文件名时调用getName()方法的返回值跟getObjectId()一致，而不是实际的文件名。实际上这个是我们早期版本为了兼容Parse有意为之的。为了保持兼容性考虑，我们不准备改变这个API的行为。
+如果你有取文件名的需求，你可以使用AVFile.getOriginalName();</p><h3 id="&#x6587;&#x4EF6;&#x5217;&#x8868;">文件列表</h3><p>不少用户在实际使用中可能会用到文件列表，来展示用户发送的一组图片或者文件等。这个时候你可以使用这样的代码来完成这个功能：</p><pre><code>    List&lt;AVFile&gt; fileList = new LinkedList&lt;AVFile&gt;();
+    fileList.add(parseFile1);
+    fileList.add(parseFile2);
+
+    AVObject parseObject = new AVObject(&quot;FileUnitTest&quot;);
+    parseObject.addAll(&quot;file_array&quot;, fileList);//请不要直接使用put方法
+    parseObject.save();</code></pre><h2 id="&#x7528;&#x6237;">用户</h2><p>用户是一个应用程序的核心。对于个人开发者来说，能够让自己的应用程序积累到多的用户，就能给自己带来更多的创作动力。因此LeanCloud提供了一个专门的用户类，AVUser来自动处理用户账户管理所需的功能。
+有了这个类，你就可以在你的应用程序中添加用户帐户功能。</p><p>AVUser是一个AVObject的子类，它继承了AVObject所有的方法，具有AVObject相同的功能。不同的是，AVUser增加了一些特定的关于用户账户相关的功能。</p><h3 id="&#x5C5E;&#x6027;">属性</h3><p>AVUser除了从AVObject继承的属性外，还有几个特定的属性：</p><ul>
+<li>username: 用户的用户名（必需）。</li>
+<li>password: 用户的密码（必需）。</li>
+<li>email: 用户的电子邮件地址（可选）。</li>
+</ul><p>和其他AVObject对象不同的是，在设置AVUser这些属性的时候不是使用的put方法，而是专门的setXXX方法。</p><h3 id="&#x6CE8;&#x518C;">注册</h3><p>你的应用程序会做的第一件事可能是要求用户注册。下面的代码是一个典型的注册过程：</p><pre><code>AVUser user = new AVUser();
+user.setUsername(&quot;steve&quot;);
+user.setPassword(&quot;f32@ds*@&amp;dsa&quot;);
+user.setEmail(&quot;steve@company.com&quot;);
+
+// 其他属性可以像其他AVObject对象一样使用put方法添加
+user.put(&quot;phone&quot;, &quot;213-253-0000&quot;);
+
+user.signUpInBackground(new SignUpCallback() {
+    public void done(AVException e) {
+        if (e == null) {
+            // successfully
+        } else {
+            // failed
+        }
+    }
+});</code></pre><p>在注册过程中，服务器会进行注册用户信息的检查，以确保注册的用户名和电子邮件地址是独一无二的。此外，<strong>服务端还会对用户密码进行不可逆的加密处理，不会明文保存任何密码，应用切勿再次在客户端加密密码，这会导致重置密码等功能不可用</strong>。</p><p>请注意，我们使用的是<code>signUpInBackground</code>方法，而不是<code>saveInBackground</code>方法。另外还有各种不同的signUp方法。像往常一样，我们建议在可能的情况下尽量使用异步版本的signUp方法，这样就不会影响到应用程序主UI线程的响应。你可以阅读API中更多的有关这些具体方法的使用。</p><p>如果注册不成功，你可以查看返回的错误对象。最有可能的情况是，用户名或电子邮件已经被另一个用户注册。这种情况你可以提示用户，要求他们尝试使用不同的用户名进行注册。</p><p>你也可以要求用户使用Email做为用户名注册，这样做的好处是，你在提交信息的时候可以将输入的“用户名“默认设置为用户的Email地址，以后在用户忘记密码的情况下可以使用LeanCloud提供的重置密码功能。</p><p>关于自定义邮件模板和验证链接请看这篇<a href="http://blog.leancloud.cn/blog/2014/01/09/zi-ding-yi-ying-yong-nei-yong-hu-zhong-she-mi-ma-he-you-xiang-yan-zheng-ye-mian/">博客</a>。</p><p>用户邮箱验证后，会调用<code>AV.Cloud.onVerified(&#39;email&#39;,function)</code>的云代码回调函数，方便你做一些后处理。</p><h3 id="&#x767B;&#x5F55;">登录</h3><p>当用户注册成功后，你需要让他们以后能够登录到他们的账户后使用应用。要做到这样一点，你可以使用
+AVUser类的loginInBackground方法。</p><pre><code>AVUser.logInInBackground(&quot;username&quot;, &quot;password&quot;, new LogInCallback() {
+    public void done(AVUser user, AVException e) {
+        if (user != null) {
+            // 登录成功
+        } else {
+            // 登录失败
+        }
+    }
+});</code></pre><h3 id="&#x5F53;&#x524D;&#x7528;&#x6237;">当前用户</h3><p>如果用户在每次打开你的应用程序时都要登录，这将会直接影响到你应用的用户体验。为了避免这种情况，你可以使用缓存的currentUser对象。</p><p>每当你注册成功或是第一次登录成功，都会在本地磁盘中有一个缓存的用户对象，你可以这样来获取这个缓存的用户对象来进行登录：</p><pre><code>AVUser currentUser = AVUser.getCurrentUser();
+if (currentUser != null) {
+    // 允许用户使用应用
+} else {
+    //缓存用户对象为空时， 可打开用户注册界面…
+}</code></pre><p>当然，你也可以使用如下方法清除缓存用户对象：</p><pre><code>AVUser.logOut();             //清除缓存用户对象
+AVUser currentUser = AVUser.getCurrentUser(); // 现在的currentUser是null了</code></pre><h3 id="&#x91CD;&#x7F6E;&#x5BC6;&#x7801;">重置密码</h3><p>这是一个事实，一旦你引入了一个密码系统，那么肯定会有用户忘记密码的情况。对于这种情况，我们提供了一种方法，让用户安全地重置起密码。
+重置密码的流程很简单，开发者只要求用户输入注册的电子邮件地址即可：</p><pre><code>AVUser.requestPasswordResetInBackground(&quot;myemail@example.com&quot;, new RequestPasswordResetCallback() {
+    public void done(AVException e) {
+        if (e == null) {
+            // 已发送一份重置密码的指令到用户的邮箱
+        } else {
+            // 重置密码出错。
+        }
+    }
+});</code></pre><p>密码重置流程如下：</p><ul>
+<li>用户输入他们的电子邮件，请求重置自己的密码。</li>
+<li>LeanCloud向他们的邮箱发送一封包含特殊的密码重置连接的电子邮件。</li>
+<li>用户根据向导点击重置密码连接，打开一个特殊的页面，让他们输入一个新的密码。</li>
+<li>用户的密码已被重置为新输入的密码。</li>
+</ul><p>关于自定义邮件模板和验证链接请看这篇<a href="http://blog.leancloud.cn/blog/2014/01/09/zi-ding-yi-ying-yong-nei-yong-hu-zhong-she-mi-ma-he-you-xiang-yan-zheng-ye-mian/">博客</a>。</p><p>用户邮箱验证后，会调用<code>AV.Cloud.onVerified(&#39;email&#39;,function)</code>的云代码回调函数，方便你做一些后处理。</p><h3 id="&#x4FEE;&#x6539;&#x5BC6;&#x7801;">修改密码</h3><p>当用户系统中存在密码的时候，就会存在用户更改密码的需求，对于这种情况，我们提供了一种方法，能够同时验证老密码和修改新密码:</p><pre><code>    AVUser userA = AVUser.logIn(&quot;yourusername&quot;, &quot;yourpassword&quot;);//请确保用户当前的有效登录状态
+    userA.updatePasswordInBackground(&quot;old_password&quot;, &quot;new_password&quot;,new UpdatePasswordCallback() {
+
+      @Override
+      public void done(AVException e) {
+        Log.d(&quot;TAG&quot;,&quot;something wrong&quot;);
+      }
+    });</code></pre><p>如果要求更改密码的用户不再登录状态、原密码错误和用户不存在等情况都会通过callback返回。</p><h3 id="&#x53D1;&#x9001;&#x9A8C;&#x8BC1;&#x90AE;&#x4EF6;">发送验证邮件</h3><p>验证邮件对于很多应用来说并非是必须的，然而一旦遭遇到恶劣的强注事件时，通过验证邮件来阻拦spam用户的攻击就成为最直接和简便的方法。LeanCloud 同样也提供了这样的方法，让用户免去这方面的担忧。
+发送验证邮件的流程也很简单，在开发者获得用户的邮箱之后就可以发送验证邮件：</p><pre><code>        AVUser.requestEmailVerfiyInBackground(email, new RequestEmailVerifyCallback() {
+
+          @Override
+          public void done(AVException e) {
+
+          }
+        });</code></pre><p>关于自定义邮件模板和验证链接请看这篇<a href="http://blog.leancloud.cn/blog/2014/01/09/zi-ding-yi-ying-yong-nei-yong-hu-zhong-she-mi-ma-he-you-xiang-yan-zheng-ye-mian/">博客</a>。</p><h3 id="&#x624B;&#x673A;&#x53F7;&#x7801;&#x9A8C;&#x8BC1;">手机号码验证</h3><p>在应用设置中打开<code>注册手机号码验证</code>选项后，当你在注册用户时，填写用户手机字段后，LeanCloud 会自动向该手机号码发送一个验证短信，用户在输入验证码以后，该用户就被表示为已经验证过手机。</p><p>以下代码就可发送注册验证码到用户手机:</p><pre><code>        AVUser user = new AVUser();
+        user.setUsername(&quot;whateverusername&quot;);
+        user.setPassword(&quot;whateverpassword&quot;);
+        user.setMobilePhoneNumber(&quot;13613613613&quot;);//本号码随机生成如有雷同纯属巧合
+        user.signUp();
+
+        //如果你的账号需要重新发送短信请参考下面的代码
+        AVUser.requestMobilePhoneVerifyInrequestMobilePhoneVerifyInBackground(&quot;13613613613&quot;,new RequestMobileCodeCallback() {
+
+      @Override
+      public void done(AVException e) {
+        //发送了验证码以后做点什么呢
+      }
+    })</code></pre><p>调用以下代码即可验证验证码:</p><pre><code>      AVUser.verifyMobilePhoneInBackground(smsCode, new AVMobilePhoneVerifyCallback() {
+
+      @Override
+      public void done(AVException e) {
+        // TODO Auto-generated method stub
+
+      }
+    });</code></pre><p>验证成功后，用户的<code>mobilePhoneVerified</code>属性变为true，并且调用云代码的<code>AV.Cloud.onVerifed(&#39;sms&#39;, function)</code>方法。</p><h3 id="&#x624B;&#x673A;&#x53F7;&#x7801;&#x767B;&#x5F55;">手机号码登录</h3><p>在手机号码被验证后，用户可以使用手机号码进行登录。手机号码包括两种方式：手机号码＋密码方式，手机号码＋短信验证码方式。</p><p>以下为手机号码＋密码来登录的方式：</p><pre><code>    AVUser.loginByMobilePhoneNumber(&quot;13613613613&quot;,&quot;whateverpassword&quot;);//本号码随机生成如有雷同纯属巧合</code></pre><p>以下为发送登录短信验证码：</p><pre><code>    AVUser.requestLoginSmsCodeInBackground(&quot;13613613613&quot;, new RequestMobileCodeCallback() {
+
+      @Override
+      public void done(AVException e) {
+        // 登录短信验证码发送以后你要做点什么呢
+
+      }
+    });</code></pre><p>最后使用短信验证码＋手机号码进行登录:</p><pre><code>    AVUser.loginBySMSCodeInBackground(&quot;13613613613&quot;, smsCode, new LogInCallback&lt;AVUser&gt;() {
+
+      @Override
+      public void done(AVUser user, AVException e) {
+
+      }
+    });</code></pre><h3 id="&#x624B;&#x673A;&#x53F7;&#x7801;&#x91CD;&#x7F6E;&#x5BC6;&#x7801;">手机号码重置密码</h3><p>如果用户使用手机号码注册或者验证过手机号码，你也可以通过手机短信来实现<code>忘记密码</code>功能：</p><pre><code>   AVUser.requestPasswordResetBySmsCodeInBackground(&quot;12312312312&quot;,new  new RequestMobileCodeCallback() {
+          @Override
+          public void done(AVException e) {
+           if(e==null){
+             //发送成功了
+           }
+          }
+        });</code></pre><p>之后在用户受到重置密码的验证码之后，你可以调用这个方法来实现密码重置:</p><pre><code>  AVUser.resetPasswordBySmsCodeInBackground(smsCode,newPassword,new UpdatePasswordCallback() {
+      @Override
+      public void done(AVException e) {
+        if(e == null){
+        //密码更改成功了！
+        }
+      }
+    });</code></pre><p>修改成功以后，用户就可以使用新密码登陆了</p><h3 id="&#x67E5;&#x8BE2;-1">查询</h3><p>查询用户，你需要使用特殊的用户查询对象来完成：</p><pre><code>AVQuery&lt;AVObject&gt; query = AVQuery.getQuery(;
+query.whereEqualTo(&quot;gender&quot;, &quot;female&quot;);
+query.findInBackground(new FindCallback&lt;AVObject&gt;() {
+    public void done(List&lt;AVObject&gt; objects, AVException e) {
+        if (e == null) {
+            // 查询成功
+        } else {
+            // 查询出错
+        }
+    }
+})</code></pre><h3 id="&#x533F;&#x540D;&#x7528;&#x6237;">匿名用户</h3><p>如果你的App需要使用一个相对弱化的用户系统时，你可以考虑LeanCloud提供的匿名用户系统来实现你的功能。</p><p>你只需要一行代码就可以获取以后一个匿名的用户账号：</p><pre><code>    AVAnonymousUtils.logIn(new LogInCallback&lt;AVUser&gt;() {
+      @Override
+      public void done(AVUser user, AVException e) {
+          ...
+      }
+    });</code></pre><p>当你的用户系统兼有匿名和“实名”的账号时，你可以通过AVUser.isAnonymous()来判断是否是一个匿名用户。</p><h3 id="&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x67E5;&#x770B;&#x7528;&#x6237;&#x8868;">浏览器中查看用户表</h3><p>User表是一个特殊的表，专门存储AVUser对象。在浏览器端，你会看到一个_User表。</p><h2 id="&#x5730;&#x7406;&#x4F4D;&#x7F6E;">地理位置</h2><p>LeanCloud允许用户根据地球的经度和纬度坐标进行基于地理位置的信息查询。你可以在AVObject的查询中添加一个AVGeoPoint的对象查询。你可以实现轻松查找出离当前用户最接近的信息或地点的功能。</p><h3 id="&#x5730;&#x7406;&#x4F4D;&#x7F6E;&#x5BF9;&#x8C61;">地理位置对象</h3><p>首先需要创建一个AVGeoPoint对象。例如，创建一个北纬40.0度-东经30.0度的AVGeoPoint对象：</p><pre><code>AVGeoPoint point = new AVGeoPoint(40.0, -30.0);</code></pre><p>添加地理位置信息</p><pre><code>placeObject.put(&quot;location&quot;, point);</code></pre><h3 id="&#x5730;&#x7406;&#x67E5;&#x8BE2;">地理查询</h3><p>现在，你的数据表中有了一定的地理坐标对象的数据，这样可以测试找出最接近某个点的信息了。你可以使用AVQuery对象的whereNear方法来这样做：</p><pre><code>AVGeoPoint userLocation = (AVGeoPoint) userObject.get(&quot;location&quot;);
+AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;PlaceObject&quot;);
+query.whereNear(&quot;location&quot;, userLocation);
+query.setLimit(10);            //获取最接近用户地点的10条数据
+ArrayList&lt;AVObject&gt; nearPlaces = query.find();</code></pre><p>在以上代码中，nearPlaces是一个返回的距离userLocation点（最近到最远）的对象数组。
+要限制查询指定距离范围的数据可以使用whereWithinKilometers、whereWithinMiles或whereWithinRadians方法。
+要查询一个矩形范围内的信息可以使用whereWithinGeoBox来实现：</p><pre><code>AVGeoPoint southwestOfSF = new AVGeoPoint(37.708813, -122.526398);
+AVGeoPoint northeastOfSF = new AVGeoPoint(37.822802, -122.373962);
+AVQuery&lt;AVObject&gt; query = new AVQuery&lt;AVObject&gt;(&quot;PizzaPlaceObject&quot;);
+query.whereWithinGeoBox(&quot;location&quot;, southwestOfSF, northeastOfSF);
+ArrayList&lt;AVObject&gt; pizzaPlacesInSF = query.find();</code></pre><h3 id="&#x6CE8;&#x610F;&#x4E8B;&#x9879;">注意事项</h3><p>目前有几个需要注意的地方：</p><ul>
+<li>每个AVObject数据对象中只能有一个AVGeoPoint对象。</li>
+<li>地理位置的点不能超过规定的范围。纬度的范围应该是在-90.0到90.0之间。经度的范围应该是在-180.0到180.0之间。如果你添加的经纬度超出了以上范围，将导致程序错误。</li>
+</ul><h2 id="&#x8C03;&#x7528;&#x4E91;&#x4EE3;&#x7801;">调用云代码</h2><h3 id="&#x8C03;&#x7528;&#x51FD;&#x6570;">调用函数</h3><p>使用<code>AVCloud</code>类的静态方法来调用云代码中定义的函数：</p><pre><code> Map&lt;String,Object&gt; parameters = ......
+ AVCloud.callFunctionInBackground(&quot;validateGame&quot;, parameters, new FunctionCallback() {
+      public void done(Object object, AVException e) {
+          if (e == null) {
+              processResponse(object);
+          } else {
+              handleError();
+          }
+      }
+  }</code></pre><p><code>validateGame</code>是函数的名称，parameters是传入的函数参数，FunctionCallback对象作为调用结果的回调传入。</p><h3 id="&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x548C;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;">生产环境和测试环境</h3><p>云代码区分测试环境和生产环境，在SDK里指定调用的云代码环境，可以通过<code>setProductionMode</code>方法：</p><pre><code>AVCloud.setProductionMode(false); //调用测试环境云代码</code></pre><p>默认为true，也就是调用生产环境云代码函数。</p><h2 id="&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;&#x670D;&#x52A1;">短信验证码服务</h2><p>除了用户相关的包括注册，登录等操作以外，LeanCloud还支持额外的短信验证码服务。
+在实际的应用中，假如有一些相对比较敏感的操作，比如付费、删除重要资源等操作，你希望能够通过短信验证的方式来与用户进行确认，你就可以在用户验证过手机号码，应用管理平台打开了<code>启用手机号码短信认证</code>选项的前提下，使用LeanCloud提供的短信验证码服务。</p><p>下面是使用方法，也可以参考 github 上的 <a href="https://github.com/avoscloud/sms-demo">sms-demo</a> 项目。</p><h3 id="&#x8BF7;&#x6C42;&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;">请求短信验证码</h3><p>以下操作为给绑定这个手机号码的用户发送验证短信</p><pre><code>   AVOSCloud.requestSMSCode(&quot;13613613613&quot;,&quot;应用名&quot;,&quot;具体操作名称&quot;,10);
+   //短信格式类似于：
+   //你正在{某应用}中进行{具体操作名称}，你的验证码是:{123456}，请输入完整验证，有效期为:{10}分钟</code></pre><h3 id="&#x9A8C;&#x8BC1;&#x77ED;&#x4FE1;&#x9A8C;&#x8BC1;&#x7801;">验证短信验证码</h3><p>你可以通过以下代码来验证短信验证码：</p><pre><code>    AVOSCloud.verifySMSCodeInBackground(&quot;123456&quot;, new AVMobilePhoneVerifyCallback() {
+
+      @Override
+      public void done(AVException e) {
+      //此处可以完成用户想要完成的操作
+      }
+    });</code></pre><h2 id="&#x4EE3;&#x7801;&#x6DF7;&#x6DC6;">代码混淆</h2><p>为了保证SDK在代码混淆后能正常运作，需要保证部分类和第三方库不被混淆，参考下列配置：</p><pre><code># proguard.cfg
+
+-dontwarn com.jcraft.jzlib.**
+-keep class com.jcraft.jzlib.**  { *;}
+
+-dontwarn sun.misc.**
+-keep class sun.misc.** { *;}
+
+-dontwarn sun.security.**
+-keep class sun.security.** { *; }
+
+-dontwarn com.google.**
+-keep class com.google.** { *;}
+
+-dontwarn com.avos.**
+-keep class com.avos.** { *;}
+
+
+
+-dontwarn org.apache.**
+-keep class org.apache.** { *;}
+
+-dontwarn org.jivesoftware.smack.**
+-keep class org.jivesoftware.smack.** { *;}
+
+-dontwarn com.loopj.**
+-keep class com.loopj.** { *;}
+
+-dontwarn org.xbill.**
+-keep class org.xbill.** { *;}
+
+-keepattributes *Annotation*</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+    <!-- .col-md-9 -->
+  </div>
+  <!-- .row -->
+
+</div>
+<!-- .container-fluid -->
+
+<footer class="footer" role="contentinfo">
+  <div class="container-fluid">
+    <a href="http://leancloud.cn/" class="logo font-logo pull-right">
+      LeanCloud
+    </a>
+
+    <ul class="footer-links">
+      <li><a href="/about.html">关于<span class="mobile-hide">我们</span></a></li>
+      <li class="muted">·</li>
+      <li><a href="/pricing.html">价格</a></li>
+      <li class="muted">·</li>
+      <li><a href="/docs/">文档</a></li>
+      <li class="muted">·</li>
+      <li><a href="/docs/sdk_down.html">下载</a></li>
+      <li class="muted">·</li>
+      <li><a href="//status.leancloud.cn/"><span class="mobile-hide">健康</span>状态</a></li>
+      <li class="muted">·</li>
+      <li><a href="http://ticket.avosapps.com/" target="_self"><span class="mobile-hide">技术</span>支持</a></li>
+      <li class="muted">·</li>
+      <li><a href="http://segmentfault.com/avoscloud">问答</a></li>
+      <li class="muted">·</li>
+      <li><a href="http://www.v2ex.com/go/avoscloud">论坛</a></li>
+      <li class="muted">·</li>
+      <li><a href="/jobs.html">工作<span class="mobile-hide">机会</span></a></li>
+      <li class="muted">·</li>
+      <li><a href="http://blog.leancloud.cn">Blog</a></li>
+      <li class="muted">·</li>
+      <li><a href="/logo.html">Logo</a></li>
+      <li class="muted">·</li>
+      <li><a href="/terms.html"><span class="mobile-hide">使用</span>协议</a></li>
+      <li class="muted">·</li>
+      <li><a href="https://github.com/avoscloud/avoscloud-doc">文档源码</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="javascript/jquery.min.js"></script>
+<script src="javascript/bootstrap.min.js"></script>
+<script src="javascript/bootstrap-hover-dropdown.js"></script>
+<script src="javascript/pangu.js"></script>
+<script>
+pangu.page_spacing();
+
+$('.sidebar-wrapper').affix({
+  offset: {
+    top: 60
+  , bottom: function () {
+      return (this.bottom = $('.footer').outerHeight(true))
+    }
+  }
+}).on('affix.bs.affix', function (e) {
+  var tocWidth = $('#toc').outerWidth(true);
+  $('#toc').width(tocWidth);
+  $('.sidebar-affix-shadow').removeClass('bottom').addClass('on').attr('data-width', tocWidth);
+  $('head').append('<style>.sidebar-affix-shadow:before, .sidebar-affix-shadow:after {width: ' + tocWidth + 'px;}</style>');
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - $('.footer').outerHeight(true)) {
+      // If window reaches bottom
+      $('.sidebar-affix-shadow').addClass('bottom').removeClass('on');
+    } else {
+      // If user scrolls back
+      $('.sidebar-affix-shadow').removeClass('bottom').addClass('on');
+    }
+  });
+}).on('affix-top.bs.affix', function (e) {
+  // If scrolls back to top
+  $('#toc').removeAttr('style');
+  $('.sidebar-affix-shadow').removeClass('bottom on');
+}).on('affix-bottom.bs.affix', function (e) {
+  // If window reaches bottom (Affix style)
+  $('.sidebar-affix-shadow').addClass('bottom').removeClass('on');
+});
+
+$(function() {
+    prettyPrint();
+
+
+    $("pre.prettyprint code").each(function(index, ele) {
+        if ($(this).text().indexOf("{{appid}}") != -1 || $(this).text().indexOf("{{appkey}}") != -1) {
+            $(this).after("<div class='doc-example-action'><span style='color:#bba378;' ng-show='currentApp'>选择应用 <select ng-model='currentApp' ng-options='app.app_name for app in apps'></select></span> <button class='copybtn'>Copy</button></div>");
+        } else {
+            $(this).after("<div class='doc-example-action'><button class='copybtn'>Copy</button></div>");
+        }
+    });
+    var clip = new ZeroClipboard();
+    clip.glue($(".copybtn"));
+    clip.on("mousedown", function(client, args) {
+        $(this).parents("pre.prettyprint").removeClass("active")
+        clip.setText($(this).parents("pre").find("code").text());
+    });
+    clip.on("complete", function() {
+        $(this).parents("pre.prettyprint").addClass("active");
+    });
+});
+</script>
+<script src="javascript/custom.js">
+</script>
+
+
+<script src="javascript/angular.min.js">
+</script>
+
+
+<script type="text/javascript">
+angular.module("app", []);
+angular.module("app").controller("AppCtrl", ['$scope', '$http',
+    function($scope, $http) {
+
+        $scope.appid = "{{your_app_id}}";
+        $scope.appkey = "{{your_app_key}}";
+        $http.get("/1/clients/self/apps").success(
+            function(data) {
+                if (data.length > 0) {
+
+                    $scope.currentApp = data[0];
+                    $scope.$watch('currentApp', function() {
+                        $scope.appid = $scope.currentApp.app_id;
+                        $scope.appkey = $scope.currentApp.app_key;
+                    });
+                    $scope.apps = data;
+                }
+
+            }).error(function(data) {
+
+        });
+    }
+]);
+</script>
+<script>
+
+$(function(){
+
+  angular.element("body").scope().sdkversion = $sdk_versions;
+
+})
+
+</script>
+
+
+</body>
+
+</html>
