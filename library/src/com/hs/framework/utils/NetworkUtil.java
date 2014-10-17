@@ -16,7 +16,7 @@ import android.net.wifi.WifiManager;
 /**
  *
  * @author wanghuan
- * @date 2014Äê10ÔÂ11ÈÕ ÏÂÎç2:11:16
+ * @date 2014å¹´10æœˆ11æ—¥ ä¸‹åˆ2:11:16
  * @email hunter.v.wang@gmail.com
  *
  */
