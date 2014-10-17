@@ -10,7 +10,7 @@ import android.net.ConnectivityManager;
 /**
  *
  * @author wanghuan
- * @date 2014Äê10ÔÂ11ÈÕ ÏÂÎç1:37:01
+ * @date 2014å¹´10æœˆ11æ—¥ ä¸‹åˆ1:37:01
  * @email hunter.v.wang@gmail.com
  *
  */
