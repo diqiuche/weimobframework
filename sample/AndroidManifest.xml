@@ -3,6 +3,8 @@
     package="com.example.example"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -21,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".NetWorkSampleActivity"></activity>
+        <activity android:name=".HttpRequestSample"></activity>
+        <activity android:name=".ImageLoaderSample"></activity>
+        <activity android:name=".ThirdPartLoginSample"></activity>
+        <activity android:name=".ThirdPartShareSample"></activity>
     </application>
 
 </manifest>
