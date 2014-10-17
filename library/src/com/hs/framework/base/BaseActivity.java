@@ -1,4 +1,4 @@
-package com.hs.framework.base.activity;
+package com.hs.framework.base;
 
 import com.hs.framework.common.NetStatus;
 import com.hs.framework.receiver.FrameworkListener;
@@ -13,7 +13,7 @@ import android.os.Bundle;
 /**
  *
  * @author wanghuan
- * @date 2014��10��11�� ����1:32:52
+ * @date 2014年10月11日 下午1:32:52
  * @email hunter.v.wang@gmail.com
  *
  */

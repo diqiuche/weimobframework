@@ -1,4 +1,4 @@
-package com.hs.framework.base.fragment;
+package com.hs.framework.base;
 /**
  *
  * @author wanghuan

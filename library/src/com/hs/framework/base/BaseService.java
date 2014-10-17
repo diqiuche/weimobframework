@@ -1,4 +1,4 @@
-package com.hs.framework.base.service;
+package com.hs.framework.base;
 /**
  *
  * @author wanghuan
