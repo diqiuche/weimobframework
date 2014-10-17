@@ -2,7 +2,7 @@ package com.hs.framework.database;
 /**
  *
  * @author wanghuan
- * @date 2014Äê10ÔÂ11ÈÕ ÏÂÎç2:25:50
+ * @date 2014å¹´10æœˆ11æ—¥ ä¸‹åˆ2:25:50
  * @email hunter.v.wang@gmail.com
  *
  */
