@@ -10,13 +10,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.hs.framework.core.HttpRequestEngine.HttpCallback;
+
 import android.os.Handler;
 import android.os.Message;
 
 /**
  *
  * @author wanghuan
- * @date 2014��10��11�� ����1:24:16
+ * @date 2014年10月11日 下午 1:24:16
  * @email hunter.v.wang@gmail.com
  *
  */
