@@ -1,0 +1,10 @@
+com.hs.framework.base
+com.hs.framework.common
+com.hs.framework.core
+com.hs.framework.database
+com.hs.framework.entities
+com.hs.framework.exception
+com.hs.framework.net
+com.hs.framework.receiver
+com.hs.framework.utils
+com.hs.framework.view
