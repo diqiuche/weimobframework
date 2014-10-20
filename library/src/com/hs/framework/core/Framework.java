@@ -1,6 +1,8 @@
 package com.hs.framework.core;
 
+import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
+
 import android.content.Context;
 
 /**
@@ -18,6 +20,8 @@ public class Framework {
 															"To re-init Framework with new configuration call Framework.destroy() at first.";
 	private static final String ERROR_NOT_INIT = "Framework must be init with configuration before using";
 	private static final String ERROR_INIT_CONFIG_WITH_NULL = "Framework configuration can not be initialized with null";
+	
+	private static final String ERROR_FRAMEWORK_NULL = "Framework is null";
 	
 	private Context context;
 	
@@ -55,6 +59,27 @@ public class Framework {
 	 */
 	public boolean isInited() {
 		return configuration != null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Context getContext(){
+		if (configuration == null){
+			L.d(ERROR_FRAMEWORK_NULL);
+			throw new RuntimeException(ERROR_FRAMEWORK_NULL);
+		}
+		return configuration.context;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public WeixinObject getWeixinObject(){
+		WeixinObject weixinObject = WeixinObject.getInstance(context);
+		return weixinObject;
 	}
 	
 	/**

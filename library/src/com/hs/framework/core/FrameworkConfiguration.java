@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.hs.framework.core.HttpRequestEngine.HttpRequestConfiguration;
+import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -48,11 +49,13 @@ public final class FrameworkConfiguration {
 	final Resources resources;
 	final ImageLoaderConfiguration imageLoaderConfiguration;
 	final HttpRequestConfiguration httpRequestConfiguration;
+	final WeixinObject weixinObject;
 	
 	private FrameworkConfiguration(final Builder builder) {
 		context = builder.context;
 		resources = context.getResources();
 		this.environment = builder.environment;
+		this.weixinObject = builder.weixinObject;
 		this.imageLoaderConfiguration = builder.imageLoaderConfiguration;
 		this.httpRequestConfiguration = builder.httpRequestConfiguration;
 		L.writeDebugLogs(builder.writeLogs);
@@ -70,6 +73,8 @@ public final class FrameworkConfiguration {
 		private ImageLoaderConfiguration imageLoaderConfiguration;
 		private HttpRequestConfiguration httpRequestConfiguration;
 		private boolean writeLogs = false;
+		
+		private WeixinObject weixinObject;
 		
 		public Builder(Context context) {
 			this.context = context.getApplicationContext();
@@ -117,11 +122,26 @@ public final class FrameworkConfiguration {
 			return this;
 		}
 		
+		/**
+		 * 
+		 * @param httpRequestConfiguration
+		 * @return
+		 */
 		public Builder initHttpRequestConfig(HttpRequestConfiguration httpRequestConfiguration){
 			this.httpRequestConfiguration = httpRequestConfiguration;
 			if(this.httpRequestConfiguration != null){
 				HttpRequestEngine.getInstance().init(httpRequestConfiguration);
 			}
+			return this;
+		}
+		
+		/**
+		 * 
+		 * @param weixinConfig
+		 * @return
+		 */
+		public Builder initWeixinConfig(WeixinObject weixinObject){
+			this.weixinObject = weixinObject;
 			return this;
 		}
 		
