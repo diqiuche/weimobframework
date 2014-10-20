@@ -1,6 +1,7 @@
 package com.hs.framework.base;
 
 import com.hs.framework.common.NetStatus;
+import com.hs.framework.core.Framework;
 import com.hs.framework.receiver.FrameworkListener;
 import com.hs.framework.receiver.FrameworkReceiver;
 
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 /**
  *
@@ -17,7 +20,7 @@ import android.os.Bundle;
  * @email hunter.v.wang@gmail.com
  *
  */
-public class BaseActivity extends Activity implements FrameworkListener{
+public class BaseActivity extends Activity implements FrameworkListener , OnClickListener{
 	
 	private FrameworkReceiver frameworkReceiver;
 	private IntentFilter intentFilter;
@@ -66,6 +69,40 @@ public class BaseActivity extends Activity implements FrameworkListener{
 	public void onNetworkChaged(NetStatus staus) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void iFinish(){
+		finish();
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
+	
+	/**
+	 * 
+	 * @param intent
+	 */
+	public void iStartActivity(Intent intent){
+		if(intent == null){
+			return;
+		}
+		startActivity(intent);
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Framework getFramework(){
+		return Framework.getInstance();
 	}
 
 }
