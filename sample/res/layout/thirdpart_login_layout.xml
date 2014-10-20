@@ -9,6 +9,22 @@
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="注册到微信"
+            android:id="@+id/login_weixin_register"/>
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注册结果："
+            android:visibility="gone"
+            android:id="@+id/login_weixin_register_result"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享"
+            android:id="@+id/login_weixin_share"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="微信登录"
             android:id="@+id/login_weixin"/>
         <Button 
