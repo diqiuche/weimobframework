@@ -6,6 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信登录"
+            android:textColor="#00ff33"
+            android:textSize="24sp"
+            android:layout_margin="5dp"/>
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,11 +24,6 @@
             android:text="注册结果："
             android:visibility="gone"
             android:id="@+id/login_weixin_register_result"/>
-        <Button 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="微信分享"
-            android:id="@+id/login_weixin_share"/>
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,11 +49,49 @@
             android:layout_height="wrap_content"
             android:text="微信已经登录信息"
             android:id="@+id/login_weixin_info"/>
+        
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ登录"
+            android:textColor="#00ff33"
+            android:textSize="24sp"
+            android:layout_margin="5dp"
+            android:layout_marginTop="15dp"/>
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="QQ登录"
             android:id="@+id/login_qq"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存QQ信息"
+            android:id="@+id/login_qq_info_save"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清空QQ信息"
+            android:id="@+id/login_qq_info_clean"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="读取QQ信息"
+            android:id="@+id/login_qq_info_read"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ已经登录信息"
+            android:id="@+id/login_qq_info"/>
+        
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="新浪微博登录"
+            android:textColor="#00ff33"
+            android:textSize="24sp"
+            android:layout_margin="5dp"
+            android:layout_marginTop="15dp"/>
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
