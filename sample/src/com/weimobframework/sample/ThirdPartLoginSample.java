@@ -1,29 +1,13 @@
 package com.weimobframework.sample;
 
-import java.io.ObjectInputStream.GetField;
-
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.sdk.modelmsg.WXTextObject;
-import com.tencent.mm.sdk.modelmsg.SendAuth.Resp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.weimobframework.sample.R;
 import com.hs.framework.base.BaseActivity;
 import com.hs.framework.thirdpart.api.wxapi.WeixinCallback;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
-
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  *
@@ -50,6 +34,10 @@ public class ThirdPartLoginSample extends BaseActivity {
 		
 		findViewById(R.id.login_weixin_register).setOnClickListener(this);
 		findViewById(R.id.login_weixin).setOnClickListener(this);
+		findViewById(R.id.login_weixin_info_save).setOnClickListener(this);
+		findViewById(R.id.login_weixin_info_clean).setOnClickListener(this);
+		findViewById(R.id.login_weixin_info_read).setOnClickListener(this);
+		findViewById(R.id.login_weixin_info).setOnClickListener(this);
 		findViewById(R.id.login_weixin_share).setOnClickListener(this);
 		
 	}
@@ -69,6 +57,19 @@ public class ThirdPartLoginSample extends BaseActivity {
 		case R.id.login_weixin:
 			weixinObject.login(weixinCallback);
 			L.d("[ start login weixin]");
+			break;
+		case R.id.login_weixin_info:
+			L.d("[ weixin info ]" + weixinObject.toString());
+			break;
+		case R.id.login_weixin_info_read:
+			WeixinObject w = weixinObject.readObject();
+			L.d("[ weixin info  read]" + w.toString());
+			break;
+		case R.id.login_weixin_info_save:
+			L.d("[ weixin info save ]" + weixinObject.saveObject());
+			break;
+		case R.id.login_weixin_info_clean:
+			L.d("[ weixin info clean ]" + weixinObject.cleanObject());
 			break;
 		case R.id.login_qq:
 			
@@ -94,10 +95,12 @@ public class ThirdPartLoginSample extends BaseActivity {
 		public void onSuccess() {
 			// TODO Auto-generated method stub
 			L.e("-- success --");
-			L.e("-- access token --" + weixinObject.getAccessToken());
-			L.e("-- openid --" + weixinObject.getOpenid());
-			L.e("-- refresh token --" + weixinObject.getRefreshToken());
-			L.e("-- express in --" + weixinObject.getExpiress());
+//			L.e("-- access token --" + weixinObject.getAccessToken());
+//			L.e("-- openid --" + weixinObject.getOpenid());
+//			L.e("-- refresh token --" + weixinObject.getRefreshToken());
+//			L.e("-- express in --" + weixinObject.getExpiress());
+			
+			L.e("-- Object --" + weixinObject.toString());
 			L.e("-- success --");
 		}
 		
