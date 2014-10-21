@@ -52,7 +52,7 @@ public class PostThread extends Thread{
 		HttpResponse httpResponse = httpClient.execute(httpPost);
 		if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 			message.what = HttpCallback.HTTP_OK;
-			message.obj = EntityUtils.toString(httpResponse.getEntity());
+			message.obj = EntityUtils.toString(httpResponse.getEntity() , "utf-8");
 		}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block

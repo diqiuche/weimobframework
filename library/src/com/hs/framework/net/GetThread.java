@@ -1,6 +1,7 @@
 package com.hs.framework.net;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -44,7 +45,7 @@ public class GetThread extends Thread{
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				message.what = HttpCallback.HTTP_OK;
-				message.obj = EntityUtils.toString(httpResponse.getEntity());
+				message.obj = EntityUtils.toString(httpResponse.getEntity() , "utf-8");
 			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
