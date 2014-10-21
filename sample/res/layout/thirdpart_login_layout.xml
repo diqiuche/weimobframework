@@ -30,6 +30,26 @@
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="保存微信信息"
+            android:id="@+id/login_weixin_info_save"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清空微信信息"
+            android:id="@+id/login_weixin_info_clean"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="读取微信信息"
+            android:id="@+id/login_weixin_info_read"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信已经登录信息"
+            android:id="@+id/login_weixin_info"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="QQ登录"
             android:id="@+id/login_qq"/>
         <Button 
