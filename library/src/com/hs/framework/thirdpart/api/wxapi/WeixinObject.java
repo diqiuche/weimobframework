@@ -1,15 +1,14 @@
 package com.hs.framework.thirdpart.api.wxapi;
 
-import org.apache.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
-
 import com.hs.framework.core.HttpRequestEngine;
 import com.hs.framework.core.HttpRequestEngine.HttpCallback;
 import com.hs.framework.core.HttpRequestEngine.HttpEntity;
+import com.hs.framework.database.FrameworkSharePreference;
 import com.hs.framework.utils.L;
+import com.hs.framework.utils.Util;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
@@ -26,6 +25,25 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class WeixinObject {
 	
+	public static final String API_ACCESS_TOKEN = "weimob_weixin_api_access_token";
+	public static final String API_REFRESH_TOKEN = "weimob_weixin_api_refresh_token";
+	public static final String API_OPEN_ID = "weimob_weixin_api_open_id";
+	public static final String API_EXPIRESSIN = "weimob_weixin_api_expiressin";
+	public static final String API_NICKNAME = "weimob_weixin_api_nickname";
+	public static final String API_SEX = "weimob_weixin_api_sex";
+	public static final String API_LANGUAGE = "weimob_weixin_api_language";
+	public static final String API_CITY = "weimob_weixin_api_city";
+	public static final String API_PROVINCE = "weimob_weixin_api_province";
+	public static final String API_COUNTRY = "weimob_weixin_api_country";
+	public static final String API_HEADIMGURL = "weimob_weixin_api_headimgurl";
+	public static final String API_PRIVILEGE = "weimob_weixin_api_privilege";
+	public static final String API_UNIONID = "weimob_weixin_api_unionid";
+	
+	public static final int SEX_MALE = 1;
+	
+	public static final int SEX_FEMALE = 2;
+	
+	
 	private Context context;
 	private String appKey;
 	private String appSecret;
@@ -34,8 +52,18 @@ public class WeixinObject {
 	private String accessToken;
 	private String accessSecret;
 	private String refreshToken;
-	private int expiress;
+	private long expiress;
 	private String openid;
+	
+	private String nickname;
+	private int sex;
+	private String language;
+	private String city;
+	private String province;
+	private String country;
+	private String headimgurl;
+	private String privillege;
+	private String unionid;
 	
 	private static WeixinObject object;
 	private IWXAPI iwxapi;
@@ -51,78 +79,6 @@ public class WeixinObject {
 			object = new WeixinObject(context);
 		}
 		return object;
-	}
-	
-	public String getAppKey() {
-		return appKey;
-	}
-
-	public void setAppKey(String appKey) {
-		this.appKey = appKey;
-	}
-
-	public String getAppSecret() {
-		return appSecret;
-	}
-
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
-
-	public String getAccessSecret() {
-		return accessSecret;
-	}
-
-	public void setAccessSecret(String accessSecret) {
-		this.accessSecret = accessSecret;
-	}
-
-	public String getRefreshToken() {
-		return refreshToken;
-	}
-
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
-	}
-
-	public int getExpiress() {
-		return expiress;
-	}
-
-	public void setExpiress(int expiress) {
-		this.expiress = expiress;
-	}
-
-	public String getOpenid() {
-		return openid;
-	}
-
-	public void setOpenid(String openid) {
-		this.openid = openid;
 	}
 
 	public void setIWXAPIEventHandler(IWXAPIEventHandler iwxapiEventHandler){
@@ -203,6 +159,16 @@ public class WeixinObject {
 	}
 	
 	/**
+	 * 
+	 */
+	private void request4Userinfo(){
+		HttpEntity httpEntity = new HttpEntity();
+		httpEntity.setUrl(getUserInfoUrl());
+		L.i(httpEntity.getUrl());
+		HttpRequestEngine.get(httpEntity, request4UserinfoCallback);
+	}
+	
+	/**
 	 * HttpCallback for request access token
 	 */
 	private HttpCallback httpCallback = new HttpCallback(){
@@ -218,9 +184,8 @@ public class WeixinObject {
 					accessToken = jsonObject.getString("access_token");
 					refreshToken = jsonObject.getString("refresh_token");
 					openid = jsonObject.getString("openid");
-					expiress = jsonObject.getInt("expires_in");
-					if(weixinCallback != null)
-						weixinCallback.onSuccess();
+					expiress = System.currentTimeMillis() + jsonObject.getInt("expires_in");
+					request4Userinfo();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					if(weixinCallback != null)
@@ -245,6 +210,56 @@ public class WeixinObject {
 	};
 	
 	/**
+	 * 
+	 */
+	private HttpCallback request4UserinfoCallback = new HttpCallback() {
+		
+		@Override
+		public void success(HttpEntity httpEntity) {
+			// TODO Auto-generated method stub
+			L.d("userinfo->" + httpEntity.getResponse());
+			String response = httpEntity.getResponse();
+			if(!Util.isEmpty(response)){
+				try {
+					JSONObject jsonObject = new JSONObject(response);
+					setNickname(jsonObject.getString("nickname"));
+					setSex(jsonObject.getInt("sex"));
+					setLanguage(jsonObject.getString("language"));
+					setCity(jsonObject.getString("city"));
+					setProvince(jsonObject.getString("province"));
+					setCountry(jsonObject.getString("country"));
+					setHeadimgurl(jsonObject.getString("headimgurl"));
+					setPrivillege(jsonObject.getString("privilege"));
+					setUnionid(jsonObject.getString("unionid"));
+					if(weixinCallback != null){
+						weixinCallback.onSuccess();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					if(weixinCallback != null){
+						weixinCallback.onFailure();
+					}
+					e.printStackTrace();
+				}
+			}else{
+				if(weixinCallback != null){
+					weixinCallback.onFailure();
+				}
+			}
+			
+		}
+		
+		@Override
+		public void failure(HttpEntity httpEntity) {
+			// TODO Auto-generated method stub
+			L.d("userinfo->" + httpEntity.getResponse());
+			if(weixinCallback != null){
+				weixinCallback.onFailure();
+			}
+		}
+	};
+	
+	/**
 	 * generate https url for request access token
 	 * @return
 	 */
@@ -266,11 +281,184 @@ public class WeixinObject {
 				+ "&openid=" + openid;
 	}
 	
-	private void request4Userinfo(){
-		HttpEntity httpEntity = new HttpEntity();
-		httpEntity.setUrl(getAccesstokenUrl());
-		L.i(httpEntity.getUrl());
-		HttpRequestEngine.get(httpEntity, httpCallback);
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean saveObject(){
+		return FrameworkSharePreference.saveWeixinObject(context, object);
+	}
+	
+	/**
+	 * 
+	 */
+	public WeixinObject readObject(){
+		return FrameworkSharePreference.readWexinObject(context);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean cleanObject(){
+		return FrameworkSharePreference.cleanWexinObject(context);
+	}
+	
+	public String getAppKey() {
+		return appKey;
 	}
 
+	public void setAppKey(String appKey) {
+		this.appKey = appKey;
+	}
+
+	public String getAppSecret() {
+		return appSecret;
+	}
+
+	public void setAppSecret(String appSecret) {
+		this.appSecret = appSecret;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public String getAccessSecret() {
+		return accessSecret;
+	}
+
+	public void setAccessSecret(String accessSecret) {
+		this.accessSecret = accessSecret;
+	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
+	public long getExpiress() {
+		return expiress;
+	}
+
+	public void setExpiress(long expiress) {
+		this.expiress = expiress;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+	
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getHeadimgurl() {
+		return headimgurl;
+	}
+
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
+	}
+
+	public String getPrivillege() {
+		return privillege;
+	}
+
+	public void setPrivillege(String privillege) {
+		this.privillege = privillege;
+	}
+
+	public String getUnionid() {
+		return unionid;
+	}
+
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
+	}
+
+	@Override
+	public String toString() {
+		return "WeixinObject [appKey=" + appKey + ", appSecret=" + appSecret
+				+ ", state=" + state + ", code=" + code + ", accessToken="
+				+ accessToken + ", accessSecret=" + accessSecret
+				+ ", refreshToken=" + refreshToken + ", expiress=" + expiress
+				+ ", openid=" + openid + ", nickname=" + nickname + ", sex="
+				+ sex + ", language=" + language + ", city=" + city
+				+ ", province=" + province + ", country=" + country
+				+ ", headimgurl=" + headimgurl + ", privillege=" + privillege
+				+ ", unionid=" + unionid + "]";
+	}
+	
 }
