@@ -1,10 +1,14 @@
 package com.weimobframework.sample;
 
+import com.tencent.map.b.q;
 import com.weimobframework.sample.R;
 import com.hs.framework.base.BaseActivity;
+import com.hs.framework.thirdpart.api.qq.QqCallback;
+import com.hs.framework.thirdpart.api.qq.QqObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinCallback;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +26,8 @@ public class ThirdPartLoginSample extends BaseActivity {
 	
 	private WeixinObject weixinObject;
 	
+	private QqObject qqObject;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -29,6 +35,7 @@ public class ThirdPartLoginSample extends BaseActivity {
 		setContentView(R.layout.thirdpart_login_layout);
 		
 		weixinObject = getFramework().getWeixinObject();
+		qqObject = getFramework().getQqObject();
 		
 		weixin_register_result = (TextView)findViewById(R.id.login_weixin_register_result);
 		
@@ -38,6 +45,8 @@ public class ThirdPartLoginSample extends BaseActivity {
 		findViewById(R.id.login_weixin_info_clean).setOnClickListener(this);
 		findViewById(R.id.login_weixin_info_read).setOnClickListener(this);
 		findViewById(R.id.login_weixin_info).setOnClickListener(this);
+		
+		findViewById(R.id.login_qq).setOnClickListener(this);
 		
 	}
 	
@@ -66,7 +75,7 @@ public class ThirdPartLoginSample extends BaseActivity {
 			L.d("[ weixin info clean ]" + weixinObject.cleanObject());
 			break;
 		case R.id.login_qq:
-			
+			qqObject.login(ThirdPartLoginSample.this, qqCallback);
 			break;
 		case R.id.login_sina:
 			
@@ -89,11 +98,6 @@ public class ThirdPartLoginSample extends BaseActivity {
 		public void onSuccess() {
 			// TODO Auto-generated method stub
 			L.e("-- success --");
-//			L.e("-- access token --" + weixinObject.getAccessToken());
-//			L.e("-- openid --" + weixinObject.getOpenid());
-//			L.e("-- refresh token --" + weixinObject.getRefreshToken());
-//			L.e("-- express in --" + weixinObject.getExpiress());
-			
 			L.e("-- Object --" + weixinObject.toString());
 			L.e("-- success --");
 		}
@@ -109,6 +113,28 @@ public class ThirdPartLoginSample extends BaseActivity {
 			// TODO Auto-generated method stub
 			
 		}
+	};
+	
+	private QqCallback qqCallback = new QqCallback(){
+
+		@Override
+		public void onSuccess() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onFailure() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	};
 
 }

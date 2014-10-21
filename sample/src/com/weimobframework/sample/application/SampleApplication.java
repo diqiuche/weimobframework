@@ -5,10 +5,12 @@ import android.app.Application;
 import com.hs.framework.core.Framework;
 import com.hs.framework.core.FrameworkConfiguration;
 import com.hs.framework.core.HttpRequestEngine.HttpRequestConfiguration;
+import com.hs.framework.thirdpart.api.qq.QqObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tencent.map.b.q;
 
 /**
  *
@@ -24,6 +26,8 @@ public class SampleApplication extends Application{
 	private HttpRequestConfiguration httpRequestConfiguration;
 	
 	private WeixinObject weixinObject;
+	
+	private QqObject qqObject;
 
 	@Override
 	public void onCreate() {
@@ -43,7 +47,13 @@ public class SampleApplication extends Application{
 		weixinObject = WeixinObject.getInstance(getApplicationContext());
 		weixinObject.setAppKey("wx745063ab298f8230");
 		weixinObject.setAppSecret("414509e07d3e4c2030d6500276c54b43");
+		weixinObject.setScope("snsapi_userinfo");
 		weixinObject.setState("weimob_weixin_login_state");
+		
+		qqObject = QqObject.getInstance(getApplicationContext());
+		qqObject.setAppId("1101980906");
+		qqObject.setAppKey("PZkLIELEnMYUVqvs");
+		qqObject.setScope("all");
 		
 		initFramework();
 	}
@@ -56,6 +66,8 @@ public class SampleApplication extends Application{
 		.development()
 		.initImageLoadConfig(imageLoaderConfiguration)
 		.initHttpRequestConfig(httpRequestConfiguration)
+		.initWeixinConfig(weixinObject)
+		.initQqConfig(qqObject)
 		.writeDebugLogs()
 		.build();
 		Framework.getInstance().init(configuration);
