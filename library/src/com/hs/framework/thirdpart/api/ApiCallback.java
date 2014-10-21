@@ -8,7 +8,13 @@ package com.hs.framework.thirdpart.api;
  */
 public interface ApiCallback {
 
+	/**
+	 * 将在API事物处理<b>成功</b>后回调
+	 */
 	public void onSuccess();
 	
+	/**
+	 * 将在API事物处理<b>失败</b>后回调
+	 */
 	public void onFailure();
 }
