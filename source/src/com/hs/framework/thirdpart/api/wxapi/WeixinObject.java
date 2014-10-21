@@ -47,6 +47,7 @@ public class WeixinObject {
 	private Context context;
 	private String appKey;
 	private String appSecret;
+	private String scope;
 	private String state;
 	private String code;
 	private String accessToken;
@@ -104,7 +105,7 @@ public class WeixinObject {
 	public void login(WeixinCallback weixinCallback){
 		this.weixinCallback = weixinCallback;
 		SendAuth.Req req = new SendAuth.Req();
-		req.scope = "snsapi_userinfo";
+		req.scope = !Util.isEmpty(scope) ? scope : "snsapi_userinfo";
 		req.state = state;
 		getAPI().sendReq(req);
 	}
@@ -318,6 +319,14 @@ public class WeixinObject {
 
 	public void setAppSecret(String appSecret) {
 		this.appSecret = appSecret;
+	}
+
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
 	}
 
 	public String getState() {
