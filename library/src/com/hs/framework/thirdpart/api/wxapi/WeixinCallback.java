@@ -1,4 +1,7 @@
 package com.hs.framework.thirdpart.api.wxapi;
+
+import com.hs.framework.thirdpart.api.ApiCallback;
+
 /**
  *
  * @author wanghuan
@@ -6,13 +9,10 @@ package com.hs.framework.thirdpart.api.wxapi;
  * @email hunter.v.wang@gmail.com
  *
  */
-public interface WeixinCallback {
-
-	public void onSuccess();
+public interface WeixinCallback extends ApiCallback{
 	
 	public void onUserCancel();
 	
 	public void onRefuse();
 	
-	public void onFailure();
 }
