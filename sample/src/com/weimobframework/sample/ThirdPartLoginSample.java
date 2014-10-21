@@ -38,7 +38,6 @@ public class ThirdPartLoginSample extends BaseActivity {
 		findViewById(R.id.login_weixin_info_clean).setOnClickListener(this);
 		findViewById(R.id.login_weixin_info_read).setOnClickListener(this);
 		findViewById(R.id.login_weixin_info).setOnClickListener(this);
-		findViewById(R.id.login_weixin_share).setOnClickListener(this);
 		
 	}
 	
@@ -48,11 +47,6 @@ public class ThirdPartLoginSample extends BaseActivity {
 		switch (arg0.getId()) {
 		case R.id.login_weixin_register:
 			weixin_register_result.setVisibility(View.VISIBLE);
-			break;
-		case R.id.login_weixin_share:
-			String text = "test:"+System.currentTimeMillis();
-			
-			L.d("[ start share weixin]");
 			break;
 		case R.id.login_weixin:
 			weixinObject.login(weixinCallback);
