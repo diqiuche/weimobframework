@@ -1,16 +1,18 @@
 package com.hs.framework.core;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
 import com.hs.framework.core.HttpRequestEngine.HttpRequestConfiguration;
+import com.hs.framework.thirdpart.api.qq.QqObject;
+import com.hs.framework.thirdpart.api.sina.SinaObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tencent.a.a.b;
 
 /**
  *
@@ -50,12 +52,16 @@ public final class FrameworkConfiguration {
 	final ImageLoaderConfiguration imageLoaderConfiguration;
 	final HttpRequestConfiguration httpRequestConfiguration;
 	final WeixinObject weixinObject;
+	final QqObject qqObject;
+	final SinaObject sinaObject;
 	
 	private FrameworkConfiguration(final Builder builder) {
 		context = builder.context;
 		resources = context.getResources();
 		this.environment = builder.environment;
 		this.weixinObject = builder.weixinObject;
+		this.qqObject = builder.qqObject;
+		this.sinaObject = builder.sinaObject;
 		this.imageLoaderConfiguration = builder.imageLoaderConfiguration;
 		this.httpRequestConfiguration = builder.httpRequestConfiguration;
 		L.writeDebugLogs(builder.writeLogs);
@@ -75,6 +81,8 @@ public final class FrameworkConfiguration {
 		private boolean writeLogs = false;
 		
 		private WeixinObject weixinObject;
+		private QqObject qqObject;
+		private SinaObject sinaObject;
 		
 		public Builder(Context context) {
 			this.context = context.getApplicationContext();
@@ -142,6 +150,26 @@ public final class FrameworkConfiguration {
 		 */
 		public Builder initWeixinConfig(WeixinObject weixinObject){
 			this.weixinObject = weixinObject;
+			return this;
+		}
+		
+		/**
+		 * 
+		 * @param qqConfig
+		 * @return
+		 */
+		public Builder initQqConfig(QqObject qqObject){
+			this.qqObject = qqObject;
+			return this;
+		}
+		
+		/**
+		 * 
+		 * @param sinaConfig
+		 * @return
+		 */
+		public Builder initSinaConfig(SinaObject sinaObject){
+			this.sinaObject = sinaObject;
 			return this;
 		}
 		

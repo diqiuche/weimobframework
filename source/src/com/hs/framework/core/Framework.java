@@ -1,5 +1,6 @@
 package com.hs.framework.core;
 
+import com.hs.framework.thirdpart.api.qq.QqObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 
@@ -80,6 +81,15 @@ public class Framework {
 	public WeixinObject getWeixinObject(){
 		WeixinObject weixinObject = WeixinObject.getInstance(context);
 		return weixinObject;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public QqObject getQqObject(){
+		QqObject qqObject = QqObject.getInstance(context);
+		return qqObject;
 	}
 	
 	/**
