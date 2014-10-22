@@ -1,10 +1,12 @@
 package com.weimobframework.sample;
 
-import com.tencent.map.b.q;
 import com.weimobframework.sample.R;
 import com.hs.framework.base.BaseActivity;
 import com.hs.framework.thirdpart.api.qq.QqCallback;
 import com.hs.framework.thirdpart.api.qq.QqObject;
+import com.hs.framework.thirdpart.api.sina.SinaCallback;
+import com.hs.framework.thirdpart.api.sina.SinaObject;
+import com.hs.framework.thirdpart.api.sina.SinaSSOActivity;
 import com.hs.framework.thirdpart.api.wxapi.WeixinCallback;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
@@ -20,13 +22,15 @@ import android.widget.TextView;
  * @email hunter.v.wang@gmail.com
  *
  */
-public class ThirdPartLoginSample extends BaseActivity {
+public class ThirdPartLoginSample extends SinaSSOActivity {
 	
 	private TextView weixin_register_result;
 	
 	private WeixinObject weixinObject;
 	
 	private QqObject qqObject;
+	
+	private SinaObject sinaObject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class ThirdPartLoginSample extends BaseActivity {
 		
 		weixinObject = getFramework().getWeixinObject();
 		qqObject = getFramework().getQqObject();
+		sinaObject = getFramework().getSinaObject();
 		
 		weixin_register_result = (TextView)findViewById(R.id.login_weixin_register_result);
 		
@@ -51,6 +56,12 @@ public class ThirdPartLoginSample extends BaseActivity {
 		findViewById(R.id.login_qq_info_save).setOnClickListener(this);
 		findViewById(R.id.login_qq_info_read).setOnClickListener(this);
 		findViewById(R.id.login_qq_info_clean).setOnClickListener(this);
+		
+		findViewById(R.id.login_sina).setOnClickListener(this);
+		findViewById(R.id.login_sina_info).setOnClickListener(this);
+		findViewById(R.id.login_sina_info_save).setOnClickListener(this);
+		findViewById(R.id.login_sina_info_read).setOnClickListener(this);
+		findViewById(R.id.login_sina_info_clean).setOnClickListener(this);
 		
 	}
 	
@@ -97,7 +108,19 @@ public class ThirdPartLoginSample extends BaseActivity {
 			break;
 			
 		case R.id.login_sina:
-			
+			sinaObject.login(ThirdPartLoginSample.this, sinaCallback);
+			break;
+		case R.id.login_sina_info:
+			L.i("[login_sina_info]" + sinaObject.toString());
+			break;
+		case R.id.login_sina_info_save:
+			L.i("[login_sina_info_save]" + sinaObject.saveSinaObject());
+			break;
+		case R.id.login_sina_info_read:
+			L.i("[login_sina_info_read]" + sinaObject.readSinaObject().toString());
+			break;
+		case R.id.login_sina_info_clean:
+			L.i("[login_sina_info_clean]" + sinaObject.cleanSinaObject());
 			break;
 
 		default:
@@ -154,6 +177,33 @@ public class ThirdPartLoginSample extends BaseActivity {
 			L.i("[onCancel]");
 		}
 		
+	};
+	
+	private SinaCallback sinaCallback = new SinaCallback() {
+		
+		@Override
+		public void onSuccess() {
+			// TODO Auto-generated method stub
+			L.d("SinaCallback -> onSuccess()");
+		}
+		
+		@Override
+		public void onFailure() {
+			// TODO Auto-generated method stub
+			L.d("SinaCallback -> onFailure()");
+		}
+
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+			L.d("SinaCallback -> onCancel()");
+		}
+
+		@Override
+		public void onWeiboException() {
+			// TODO Auto-generated method stub
+			L.d("SinaCallback -> onWeiboException()");
+		}
 	};
 
 }
