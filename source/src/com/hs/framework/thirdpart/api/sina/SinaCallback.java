@@ -10,5 +10,9 @@ import com.hs.framework.thirdpart.api.ApiCallback;
  *
  */
 public interface SinaCallback extends ApiCallback{
+	
+	public void onCancel();
+	
+	public void onWeiboException();
 
 }
