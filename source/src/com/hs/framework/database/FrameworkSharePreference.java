@@ -1,5 +1,6 @@
 package com.hs.framework.database;
 
+import com.hs.framework.thirdpart.api.qq.QqObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 
@@ -109,7 +110,75 @@ public class FrameworkSharePreference {
 		editor.commit();
 		return true;
 	}
+	/**
+	 * 
+	 * @param context
+	 * @param qqObject
+	 * @return
+	 */
+	public static boolean saveQqObject(Context context , QqObject qqObject){
+		SharedPreferences.Editor editor = getEditor(context);
+		editor.putString(QqObject.API_PAY_TOKEN , qqObject.getPayToken());
+		editor.putString(QqObject.API_OPEN_ID , qqObject.getOpenId());
+		editor.putLong(QqObject.API_EXPIRESS_IN , qqObject.getExpiressin());
+		editor.putString(QqObject.API_PF , qqObject.getPf());
+		editor.putString(QqObject.API_PF_KEY, qqObject.getPfKey());
+		editor.putString(QqObject.API_ACCESS_YOKEN, qqObject.getAccessToken());
+		editor.putString(QqObject.API_QQ_HEADIMAGEURL, qqObject.getQqHeadimgurl());
+		editor.putString(QqObject.API_NICKNAME, qqObject.getNickName());
+		editor.putString(QqObject.API_CITY, qqObject.getCity());
+		editor.putString(QqObject.API_QZONEHEADIMGURL, qqObject.getQzoneHeadimgurl());
+		editor.putString(QqObject.API_PROVINCE, qqObject.getProvince());
+		editor.putString(QqObject.API_SEX, qqObject.getSex());
+		editor.commit();
+		return true;
+	}
 	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static QqObject readQqObject(Context context){
+		SharedPreferences reader = getSharedPreferences(context);
+		QqObject qqObject = QqObject.getInstance(context);
+		qqObject.setPayToken(reader.getString(QqObject.API_PAY_TOKEN, null));
+		qqObject.setOpenId(reader.getString(QqObject.API_OPEN_ID, null));
+		qqObject.setExpiressin(reader.getLong(QqObject.API_EXPIRESS_IN, -1));
+		qqObject.setPf(reader.getString(QqObject.API_PF, null));
+		qqObject.setPfKey(reader.getString(QqObject.API_PF_KEY, null));
+		qqObject.setAccessToken(reader.getString(QqObject.API_ACCESS_YOKEN, null));
+		qqObject.setQqHeadimgurl(reader.getString(QqObject.API_QQ_HEADIMAGEURL, null));
+		qqObject.setNickName(reader.getString(QqObject.API_NICKNAME, null));
+		qqObject.setCity(reader.getString(QqObject.API_CITY, null));
+		qqObject.setQzoneHeadimgurl(reader.getString(QqObject.API_QZONEHEADIMGURL, null));
+		qqObject.setProvince(reader.getString(QqObject.API_PROVINCE, null));
+		qqObject.setSex(reader.getString(QqObject.API_SEX, null));
+		return qqObject;
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static boolean cleanQqObject(Context context){
+		SharedPreferences.Editor editor = getEditor(context);
+		editor.putString(QqObject.API_PAY_TOKEN , null);
+		editor.putString(QqObject.API_OPEN_ID , null);
+		editor.putLong(QqObject.API_EXPIRESS_IN , -1);
+		editor.putString(QqObject.API_PF , null);
+		editor.putString(QqObject.API_PF_KEY, null);
+		editor.putString(QqObject.API_ACCESS_YOKEN, null);
+		editor.putString(QqObject.API_QQ_HEADIMAGEURL, null);
+		editor.putString(QqObject.API_NICKNAME, null);
+		editor.putString(QqObject.API_CITY, null);
+		editor.putString(QqObject.API_QZONEHEADIMGURL, null);
+		editor.putString(QqObject.API_PROVINCE, null);
+		editor.putString(QqObject.API_SEX, null);
+		editor.commit();
+		return true;
+	}
 	
 
 }
