@@ -1,6 +1,7 @@
 package com.hs.framework.database;
 
 import com.hs.framework.thirdpart.api.qq.QqObject;
+import com.hs.framework.thirdpart.api.sina.SinaObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 
@@ -110,6 +111,7 @@ public class FrameworkSharePreference {
 		editor.commit();
 		return true;
 	}
+	
 	/**
 	 * 
 	 * @param context
@@ -180,5 +182,64 @@ public class FrameworkSharePreference {
 		return true;
 	}
 	
-
+	/**
+	 * 
+	 * @param context
+	 * @param sinaObject
+	 * @return
+	 */
+	public static boolean saveSinaObject(Context context , SinaObject sinaObject){
+		SharedPreferences.Editor editor = getEditor(context);
+		editor.putString(SinaObject.API_UID, sinaObject.getUid());
+		editor.putString(SinaObject.API_TOKEN, sinaObject.getToken());
+		editor.putString(SinaObject.API_REFRESH_TOKEN, sinaObject.getRefreshToken());
+		editor.putLong(SinaObject.API_EXPIRESIN, sinaObject.getExpiresin());
+		editor.putString(SinaObject.API_IDSTR, sinaObject.getIdstr());
+		editor.putString(SinaObject.API_NAME, sinaObject.getName());
+		editor.putString(SinaObject.API_LOCATION, sinaObject.getLocation());
+		editor.putString(SinaObject.API_HEADIMGURL, sinaObject.getHeadimgurl());
+		editor.putString(SinaObject.API_GENDER, sinaObject.getGender());
+		editor.commit();
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static SinaObject readSinaObject(Context context){
+		SharedPreferences reader = getSharedPreferences(context);
+		SinaObject sinaObject = SinaObject.getInstance(context);
+		sinaObject.setUid(reader.getString(SinaObject.API_UID, null));
+		sinaObject.setToken(reader.getString(SinaObject.API_TOKEN, null));
+		sinaObject.setRefreshToken(reader.getString(SinaObject.API_REFRESH_TOKEN, null));
+		sinaObject.setExpiresin(reader.getLong(SinaObject.API_EXPIRESIN, -1));
+		sinaObject.setIdstr(reader.getString(SinaObject.API_IDSTR, null));
+		sinaObject.setName(reader.getString(SinaObject.API_NAME, null));
+		sinaObject.setLocation(reader.getString(SinaObject.API_LOCATION, null));
+		sinaObject.setHeadimgurl(reader.getString(SinaObject.API_HEADIMGURL, null));
+		sinaObject.setGender(reader.getString(SinaObject.API_GENDER, null));
+		return sinaObject;
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static boolean cleanSinaObject(Context context){
+		SharedPreferences.Editor editor = getEditor(context);
+		editor.putString(SinaObject.API_UID, null);
+		editor.putString(SinaObject.API_TOKEN, null);
+		editor.putString(SinaObject.API_REFRESH_TOKEN, null);
+		editor.putLong(SinaObject.API_EXPIRESIN, -1);
+		editor.putString(SinaObject.API_IDSTR, null);
+		editor.putString(SinaObject.API_NAME, null);
+		editor.putString(SinaObject.API_LOCATION, null);
+		editor.putString(SinaObject.API_HEADIMGURL, null);
+		editor.putString(SinaObject.API_GENDER, null);
+		editor.commit();
+		return true;
+	}
 }
