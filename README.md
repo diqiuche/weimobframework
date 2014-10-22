@@ -6,7 +6,7 @@ weimobframework
 
 --------------------------------------------
 
-Code By : Wang Huan
+By : Wang Huan
 <br>Since : 2014-10-11
 <br>Email : hunter.v.wang@gmail.com
 <br>QQ : 2816100863
