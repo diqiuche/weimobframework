@@ -47,6 +47,10 @@ public class ThirdPartLoginSample extends BaseActivity {
 		findViewById(R.id.login_weixin_info).setOnClickListener(this);
 		
 		findViewById(R.id.login_qq).setOnClickListener(this);
+		findViewById(R.id.login_qq_info).setOnClickListener(this);
+		findViewById(R.id.login_qq_info_save).setOnClickListener(this);
+		findViewById(R.id.login_qq_info_read).setOnClickListener(this);
+		findViewById(R.id.login_qq_info_clean).setOnClickListener(this);
 		
 	}
 	
@@ -74,9 +78,24 @@ public class ThirdPartLoginSample extends BaseActivity {
 		case R.id.login_weixin_info_clean:
 			L.d("[ weixin info clean ]" + weixinObject.cleanObject());
 			break;
+			
+			
 		case R.id.login_qq:
 			qqObject.login(ThirdPartLoginSample.this, qqCallback);
 			break;
+		case R.id.login_qq_info:
+			L.i("[login_qq_info]" + qqObject.toString());
+			break;
+		case R.id.login_qq_info_save:
+			L.i("[login_qq_info_save]" + qqObject.saveQqObject());
+			break;
+		case R.id.login_qq_info_read:
+			L.i("[login_qq_info_read]" + qqObject.readQqObject().toString());
+			break;
+		case R.id.login_qq_info_clean:
+			L.i("[login_qq_info_clean]" + qqObject.cleanQqObject());
+			break;
+			
 		case R.id.login_sina:
 			
 			break;
@@ -120,19 +139,19 @@ public class ThirdPartLoginSample extends BaseActivity {
 		@Override
 		public void onSuccess() {
 			// TODO Auto-generated method stub
-			
+			L.i("[onSuccess]" + qqObject.getTencent().getOpenId());
 		}
 
 		@Override
 		public void onFailure() {
 			// TODO Auto-generated method stub
-			
+			L.i("[onFailure]");
 		}
 
 		@Override
 		public void onCancel() {
 			// TODO Auto-generated method stub
-			
+			L.i("[onCancel]");
 		}
 		
 	};
