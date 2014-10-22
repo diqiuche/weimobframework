@@ -199,6 +199,15 @@ public final class FrameworkConfiguration {
 			if(environment == null){
 				development();
 			}
+			if(weixinObject == null){
+				weixinObject = WeixinObject.getInstance(context);
+			}
+			if(qqObject == null){
+				qqObject = QqObject.getInstance(context);
+			}
+			if(sinaObject == null){
+				sinaObject = SinaObject.getInstance(context);
+			}
 			if(imageLoaderConfiguration == null){
 				ImageLoaderConfiguration imageLoaderConfiguration = new ImageLoaderConfiguration
 						.Builder(context)

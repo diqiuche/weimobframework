@@ -1,6 +1,7 @@
 package com.hs.framework.core;
 
 import com.hs.framework.thirdpart.api.qq.QqObject;
+import com.hs.framework.thirdpart.api.sina.SinaObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 
@@ -75,21 +76,39 @@ public class Framework {
 	}
 	
 	/**
-	 * 
+	 * 返回微信单例对象
 	 * @return
 	 */
 	public WeixinObject getWeixinObject(){
-		WeixinObject weixinObject = WeixinObject.getInstance(context);
-		return weixinObject;
+		if (configuration == null){
+			L.d(ERROR_FRAMEWORK_NULL);
+			throw new RuntimeException(ERROR_FRAMEWORK_NULL);
+		}
+		return configuration.weixinObject;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * 返回 QQ 单例对象
+	 * @return 
 	 */
 	public QqObject getQqObject(){
-		QqObject qqObject = QqObject.getInstance(context);
-		return qqObject;
+		if (configuration == null){
+			L.d(ERROR_FRAMEWORK_NULL);
+			throw new RuntimeException(ERROR_FRAMEWORK_NULL);
+		}
+		return configuration.qqObject;
+	}
+	
+	/**
+	 * 返回新浪微博单例对象
+	 * @return
+	 */
+	public SinaObject getSinaObject(){
+		if (configuration == null){
+			L.d(ERROR_FRAMEWORK_NULL);
+			throw new RuntimeException(ERROR_FRAMEWORK_NULL);
+		}
+		return configuration.sinaObject;
 	}
 	
 	/**
