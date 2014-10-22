@@ -84,7 +84,7 @@ public class SinaObject {
 	 */
 	public void login(Activity activity , SinaCallback sinaCallback){
 		this.sinaCallback = sinaCallback;
-		mWeiboAuth = new WeiboAuth(context, 
+		mWeiboAuth = new WeiboAuth(activity, 
         		appKey, 
         		redirectUrl,
         		scope);
