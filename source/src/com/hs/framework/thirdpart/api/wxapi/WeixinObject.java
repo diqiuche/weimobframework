@@ -131,27 +131,28 @@ public class WeixinObject {
 		public void onResp(BaseResp resp) {
 			// TODO Auto-generated method stub
 			L.d("[ weixinObject -> resp() ]");
-			SendAuth.Resp auth_resp = (SendAuth.Resp)resp;
-			switch (auth_resp.errCode) {
-			case BaseResp.ErrCode.ERR_OK:
-				L.d("[ code] " + auth_resp.code);
-				code = auth_resp.code;
-				request4Accesstoken();
-				break;
-			case BaseResp.ErrCode.ERR_AUTH_DENIED:
-				if(weixinCallback != null)
-					weixinCallback.onRefuse();
-				break;
-			case BaseResp.ErrCode.ERR_USER_CANCEL:
-				if(weixinCallback != null)
-					weixinCallback.onUserCancel();
-				break;
-			default:
-				if(weixinCallback != null)
-					weixinCallback.onFailure();
-				break;
+			if(resp instanceof SendAuth.Resp){
+				SendAuth.Resp auth_resp = (SendAuth.Resp)resp;
+				switch (auth_resp.errCode) {
+				case BaseResp.ErrCode.ERR_OK:
+					L.d("[ code] " + auth_resp.code);
+					code = auth_resp.code;
+					request4Accesstoken();
+					break;
+				case BaseResp.ErrCode.ERR_AUTH_DENIED:
+					if(weixinCallback != null)
+						weixinCallback.onRefuse();
+					break;
+				case BaseResp.ErrCode.ERR_USER_CANCEL:
+					if(weixinCallback != null)
+						weixinCallback.onUserCancel();
+					break;
+				default:
+					if(weixinCallback != null)
+						weixinCallback.onFailure();
+					break;
+				}
 			}
-			
 		}
 		
 		@Override

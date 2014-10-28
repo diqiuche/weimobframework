@@ -247,8 +247,6 @@ public class QqObject{
 		QQShare.SHARE_TO_QQ_EXT_INT	可选	Int	分享额外选项，两种类型可选（默认是不隐藏分享到QZone按钮且不自动打开分享到QZone的对话框）：
 		QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN，分享时自动打开分享到QZone的对话框。
 		QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮
-	 * @param content 分享的文本内容
-	 * @param requestListener 分享的回调
 	 */
 	public void shareToQQ(Activity activity , Bundle bundle , IUiListener iUiListener){
 		getTencent().shareToQQ(activity, bundle, iUiListener);
@@ -273,9 +271,6 @@ public class QqObject{
 		QzoneShare.SHARE_TO_QQ_TARGET_URL	必填	String	需要跳转的链接，URL字符串。
 		QzoneShare.SHARE_TO_QQ_IMAGE_URL	选填	String	分享的图片, 以ArrayList<String>的类型传入，以便支持多张图片（注：图片最多支持9张图片，多余的图片会被丢弃）。
 		注意:QZone接口暂不支持发送多张图片的能力，若传入多张图片，则会自动选入第一张图片作为预览图。多图的能力将会在以后支持。：
-	 * @param content 分享的文本内容
-	 * @param bitmap 分享的图片 bitmap 
-	 * @param requestListener 分享的回调
 	 */
 	public void shareToQZone(Activity activity , Bundle bundle , IUiListener iUiListener){
 		getTencent().shareToQzone(activity, bundle, iUiListener);
