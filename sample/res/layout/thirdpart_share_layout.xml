@@ -26,8 +26,23 @@
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="微信分享"
-            android:id="@+id/share_weixin"/>
+            android:text="微信分享 文字"
+            android:id="@+id/share_weixin_text"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享 图片+文字"
+            android:id="@+id/share_weixin_pic"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享朋友圈 文字"
+            android:id="@+id/share_weixin_pyq_text"/>
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享朋友圈 文字+图片"
+            android:id="@+id/share_weixin_pyq_pic"/>
         
         <TextView 
             android:layout_width="match_parent"
@@ -40,8 +55,8 @@
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="查看QQ已经授权信息"
-            android:id="@+id/share_qq_oauth"/>
+            android:text="QZONE 分享"
+            android:id="@+id/share_qzone"/>
         <Button 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
