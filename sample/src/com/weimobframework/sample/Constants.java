@@ -7,5 +7,4 @@ package com.weimobframework.sample;
  *
  */
 public class Constants {
-	  public static final String APP_ID = "wx745063ab298f8230";
 }
