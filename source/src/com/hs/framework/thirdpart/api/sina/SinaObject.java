@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.hs.framework.database.FrameworkSharePreference;
@@ -36,6 +37,9 @@ public class SinaObject {
 	public static final String API_LOCATION = "weimob_weixin_api_location";
 	public static final String API_HEADIMGURL = "weimob_weixin_api_headimgurl";
 	public static final String API_GENDER = "weimob_weixin_api_gender";
+	
+	public static final String DEFAULT_LAT = "0.0";
+	public static final String DEFAULT_LON = "0.0";
 
 	private Context context;
 	
@@ -48,6 +52,7 @@ public class SinaObject {
 	private String token;
 	private String refreshToken;
 	private long expiresin;
+	private long expirestime;
 	private String idstr;
 	private String name;
 	private String location;
@@ -185,7 +190,14 @@ public class SinaObject {
 	 * @return
 	 */
 	public SinaObject readSinaObject(){
-		return FrameworkSharePreference.readSinaObject(context);
+		FrameworkSharePreference.readSinaObject(context);
+		Oauth2AccessToken oauth2AccessToken = new Oauth2AccessToken();
+		oauth2AccessToken.setUid(uid);
+		oauth2AccessToken.setToken(token);
+		oauth2AccessToken.setRefreshToken(refreshToken);
+		oauth2AccessToken.setExpiresTime(expiresin);
+		setOauth2AccessToken(oauth2AccessToken);
+		return this;
 	}
 	
 	/**
@@ -194,6 +206,46 @@ public class SinaObject {
 	 */
 	public boolean cleanSinaObject(){
 		return FrameworkSharePreference.cleanSinaObject(context);
+	}
+	
+	/**
+	 * 分享文本
+	 * @param content 分享的文本内容
+	 * @param requestListener 分享的回调
+	 */
+	public void share(String content , RequestListener requestListener){
+		StatusesAPI statusesAPI = new StatusesAPI(oauth2AccessToken);
+		statusesAPI.update(content, DEFAULT_LAT, DEFAULT_LON, requestListener);
+	}
+	
+	/**
+	 * 分享文本及图片（通过图片 bitmap 方式）
+	 * @param content 分享的文本内容
+	 * @param bitmap 分享的图片 bitmap 
+	 * @param requestListener 分享的回调
+	 */
+	public void share(String content , Bitmap bitmap , RequestListener requestListener){
+		StatusesAPI statusesAPI = new StatusesAPI(oauth2AccessToken);
+		statusesAPI.upload(content, bitmap, DEFAULT_LAT, DEFAULT_LON, requestListener);
+	}
+	
+	/**
+	 * 分享文本及图片（通过图片 URL 方式）
+	 * @param content 分享的文本内容
+	 * @param imageUrl 分享的图片 URL 必须以HTTP开头
+	 * @param requestListener 分享的回调
+	 */
+	public void share(String content , String imageUrl , RequestListener requestListener){
+		StatusesAPI statusesAPI = new StatusesAPI(oauth2AccessToken);
+		statusesAPI.uploadUrlText(content, imageUrl, "", DEFAULT_LAT, DEFAULT_LON, requestListener);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isOAuthed(){
+		return readSinaObject().getOauth2AccessToken().isSessionValid();
 	}
 
 	public String getAppKey() {

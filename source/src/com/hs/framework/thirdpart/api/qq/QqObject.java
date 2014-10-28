@@ -4,8 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hs.framework.database.FrameworkSharePreference;
+import com.hs.framework.thirdpart.api.sina.StatusesAPI;
 import com.hs.framework.utils.L;
 import com.hs.framework.utils.Util;
+import com.sina.weibo.sdk.net.RequestListener;
 import com.tencent.connect.UserInfo;
 import com.tencent.mm.sdk.b.c;
 import com.tencent.tauth.IUiListener;
@@ -14,6 +16,8 @@ import com.tencent.tauth.UiError;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 
 /**
  *
@@ -216,6 +220,65 @@ public class QqObject{
 	 */
 	public boolean cleanQqObject(){
 		return FrameworkSharePreference.cleanQqObject(context);
+	}
+	
+	/**
+	 * 	示例代码如下：
+	 *  private void onClickShare() { 
+	 *	    final Bundle params = new Bundle();
+	 *	    params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+	 *	    params.putString(QQShare.SHARE_TO_QQ_TITLE, "要分享的标题");
+	 *	    params.putString(QQShare.SHARE_TO_QQ_SUMMARY,  "要分享的摘要");
+	 *	    params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,  "http://www.qq.com/news/1.html");
+		    params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,"http://imgcache.qq.com/qzone/space_item/pre/0/66768.gif");
+		    params.putString(QQShare.SHARE_TO_QQ_APP_NAME,  "测试应用222222");
+		    params.putInt(QQShare.SHARE_TO_QQ_EXT_INT,  "其他附加功能");		
+		    mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
+		}
+	
+		调用分享接口的params参数说明如下：
+		参数	是否必传	类型	参数说明
+		QQShare.SHARE_TO_QQ_KEY_TYPE	必填	Int	分享的类型。图文分享(普通分享)填Tencent.SHARE_TO_QQ_TYPE_DEFAULT
+		QQShare.PARAM_TARGET_URL	必填	String	这条分享消息被好友点击后的跳转URL。
+		QQShare.PARAM_TITLE	必填	String	分享的标题, 最长30个字符。
+		QQShare.PARAM_SUMMARY	可选	String	分享的消息摘要，最长40个字。
+		QQShare.SHARE_TO_QQ_IMAGE_URL	可选	String	分享图片的URL或者本地路径 
+		QQShare.SHARE_TO_QQ_APP_NAME	可选	String	手Q客户端顶部，替换“返回”按钮文字，如果为空，用返回代替
+		QQShare.SHARE_TO_QQ_EXT_INT	可选	Int	分享额外选项，两种类型可选（默认是不隐藏分享到QZone按钮且不自动打开分享到QZone的对话框）：
+		QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN，分享时自动打开分享到QZone的对话框。
+		QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮
+	 * @param content 分享的文本内容
+	 * @param requestListener 分享的回调
+	 */
+	public void shareToQQ(Activity activity , Bundle bundle , IUiListener iUiListener){
+		getTencent().shareToQQ(activity, bundle, iUiListener);
+	}
+	
+	/**
+	 * 示例代码如下：
+		private void shareToQzone () {
+		　　//分享类型
+		　　params.putString(QzoneShare.SHARE_TO_QQ_KEY_TYPE,SHARE_TO_QZONE_TYPE_IMAGE_TEXT );
+		    params.putString(QzoneShare.SHARE_TO_QQ_TITLE, "标题");//必填
+		    params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, "摘要");//选填
+		    params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, "跳转URL");//必填
+		    params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, "图片链接ArrayList");
+		    mTencent.shareToQzone(activity, params, new BaseUiListener());
+		}
+		params参数说明如下：
+		参数	是否必传	类型	参数说明
+		QzoneShare.SHARE_TO_QQ_KEY_TYPE	选填	Int	SHARE_TO_QZONE_TYPE_IMAGE_TEXT（图文）
+		QzoneShare.SHARE_TO_QQ_TITLE	必填	Int	分享的标题，最多200个字符。
+		QzoneShare.SHARE_TO_QQ_SUMMARY	选填	String	分享的摘要，最多600字符。
+		QzoneShare.SHARE_TO_QQ_TARGET_URL	必填	String	需要跳转的链接，URL字符串。
+		QzoneShare.SHARE_TO_QQ_IMAGE_URL	选填	String	分享的图片, 以ArrayList<String>的类型传入，以便支持多张图片（注：图片最多支持9张图片，多余的图片会被丢弃）。
+		注意:QZone接口暂不支持发送多张图片的能力，若传入多张图片，则会自动选入第一张图片作为预览图。多图的能力将会在以后支持。：
+	 * @param content 分享的文本内容
+	 * @param bitmap 分享的图片 bitmap 
+	 * @param requestListener 分享的回调
+	 */
+	public void shareToQZone(Activity activity , Bundle bundle , IUiListener iUiListener){
+		getTencent().shareToQzone(activity, bundle, iUiListener);
 	}
 
 	public String getAppId() {

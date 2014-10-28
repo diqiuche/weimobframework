@@ -9,7 +9,7 @@ import com.hs.framework.thirdpart.api.ApiCallback;
  * @email hunter.v.wang@gmail.com
  *
  */
-public interface SinaCallback extends ApiCallback{
+public interface SinaCallback extends ApiCallback {
 	
 	public void onCancel();
 	
