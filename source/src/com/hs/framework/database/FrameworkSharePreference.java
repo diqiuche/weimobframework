@@ -24,7 +24,7 @@ public class FrameworkSharePreference {
 	 * @param context
 	 * @return
 	 */
-	private static SharedPreferences getSharedPreferences(Context context){
+	public static SharedPreferences getSharedPreferences(Context context){
 		return context.getSharedPreferences(WEIMOB_FRAMEWORK_SHAREPREFERENCE_NAME, Context.MODE_PRIVATE);
 	}
 	
@@ -33,7 +33,7 @@ public class FrameworkSharePreference {
 	 * @param context
 	 * @return
 	 */
-	private static SharedPreferences.Editor getEditor(Context context){
+	public static SharedPreferences.Editor getEditor(Context context){
 		return getSharedPreferences(context).edit();
 	}
 	

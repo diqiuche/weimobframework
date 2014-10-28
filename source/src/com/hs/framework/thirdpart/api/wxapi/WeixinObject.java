@@ -1,8 +1,14 @@
 package com.hs.framework.thirdpart.api.wxapi;
 
+import java.io.ByteArrayOutputStream;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+
 import com.hs.framework.core.HttpRequestEngine;
 import com.hs.framework.core.HttpRequestEngine.HttpCallback;
 import com.hs.framework.core.HttpRequestEngine.HttpEntity;
@@ -12,6 +18,10 @@ import com.hs.framework.utils.Util;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXImageObject;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -42,6 +52,8 @@ public class WeixinObject {
 	public static final int SEX_MALE = 1;
 	
 	public static final int SEX_FEMALE = 2;
+	
+	private static final int THUMB_SIZE = 150;
 	
 	
 	private Context context;
@@ -280,6 +292,91 @@ public class WeixinObject {
 		return "https://api.weixin.qq.com/sns/userinfo?"
 				+ "access_token=" + accessToken
 				+ "&openid=" + openid;
+	}
+	
+	public void share2Friends(String message){
+		WXTextObject textObj = new WXTextObject();
+		textObj.text = message;
+		WXMediaMessage msg = new WXMediaMessage();
+		msg.mediaObject = textObj;
+		msg.description = message;
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("text"); // transaction字段用于唯一标识一个请求
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneSession;
+		getAPI().sendReq(req);
+	}
+	
+	public void share2Friends(String message , Bitmap bitmap){
+		if(bitmap == null){
+			share2Friends(message);
+			return;
+		}
+		WXImageObject imgObj = new WXImageObject(bitmap);
+		WXMediaMessage msg = new WXMediaMessage();
+		msg.mediaObject = imgObj;
+		Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
+		bitmap.recycle();
+		msg.thumbData = bmpToByteArray(thumbBmp, true);
+		
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("img");
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneSession;
+		getAPI().sendReq(req);
+	}
+	
+	public void share2FriendsLine(String message){
+		WXTextObject textObj = new WXTextObject();
+		textObj.text = message;
+		WXMediaMessage msg = new WXMediaMessage();
+		msg.mediaObject = textObj;
+		msg.description = message;
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("text"); // transaction字段用于唯一标识一个请求
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		getAPI().sendReq(req);
+	}
+	
+	public void share2FriendsLine(String message , Bitmap bitmap){
+		if(bitmap == null){
+			share2Friends(message);
+			return;
+		}
+		WXImageObject imgObj = new WXImageObject(bitmap);
+		WXMediaMessage msg = new WXMediaMessage();
+		msg.mediaObject = imgObj;
+		Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
+		bitmap.recycle();
+		msg.thumbData = bmpToByteArray(thumbBmp, true);
+		
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("img");
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		getAPI().sendReq(req);
+	}
+	
+	public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		bmp.compress(CompressFormat.PNG, 100, output);
+		if (needRecycle) {
+			bmp.recycle();
+		}
+		
+		byte[] result = output.toByteArray();
+		try {
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	private String buildTransaction(final String type) {
+		return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
 	}
 	
 	/**
