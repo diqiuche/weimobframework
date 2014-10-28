@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			startActivity(new Intent(MainActivity.this , ThirdPartLoginSample.class));
 			break;
 		case R.id.thirdpart_share:
-					
+			startActivity(new Intent(MainActivity.this , ThirdPartShareSample.class));
 			break;
 		case R.id.httprequest:
 			
