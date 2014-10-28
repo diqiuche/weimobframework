@@ -1,11 +1,13 @@
 package com.hs.framework.core;
 
+import com.hs.framework.database.FrameworkSharePreference;
 import com.hs.framework.thirdpart.api.qq.QqObject;
 import com.hs.framework.thirdpart.api.sina.SinaObject;
 import com.hs.framework.thirdpart.api.wxapi.WeixinObject;
 import com.hs.framework.utils.L;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  *
@@ -109,6 +111,22 @@ public class Framework {
 			throw new RuntimeException(ERROR_FRAMEWORK_NULL);
 		}
 		return configuration.sinaObject;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public SharedPreferences getSharePreferences(){
+		return FrameworkSharePreference.getSharedPreferences(context);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public SharedPreferences.Editor getEditor(){
+		return FrameworkSharePreference.getEditor(context);
 	}
 	
 	/**
