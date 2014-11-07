@@ -54,6 +54,7 @@ public class ThirdPartShareSample extends BaseActivity{
 		findViewById(R.id.share_weixin_pic).setOnClickListener(this);
 		findViewById(R.id.share_weixin_pyq_text).setOnClickListener(this);
 		findViewById(R.id.share_weixin_pyq_pic).setOnClickListener(this);
+		findViewById(R.id.share_weixin_gtjk).setOnClickListener(this);
 		
 		findViewById(R.id.share_qzone).setOnClickListener(this);
 		findViewById(R.id.share_qq).setOnClickListener(this);
@@ -66,6 +67,7 @@ public class ThirdPartShareSample extends BaseActivity{
 	@Override
 	public void onClick(View arg0) {
 		super.onClick(arg0);
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.share_img_1);
 		switch (arg0.getId()) {
 		case R.id.share_weixin_register:
 			
@@ -77,15 +79,18 @@ public class ThirdPartShareSample extends BaseActivity{
 			weixinObject.share2Friends("message");
 			break;
 		case R.id.share_weixin_pic:
-			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.share_img_1);
 			weixinObject.share2Friends("message", bitmap);
 			break;
 		case R.id.share_weixin_pyq_text:
-			weixinObject.share2FriendsLine("");
+			weixinObject.share2Friends("message", "http://www.baidu.com", "title", "description", bitmap);
 			break;
 		case R.id.share_weixin_pyq_pic:
-			Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.share_img_1);
-			weixinObject.share2FriendsLine("message", bitmap2);
+//			Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.share_img_1);
+//			weixinObject.share2FriendsLine("message", bitmap2);
+			weixinObject.share2FriendsLine("message", "http://www.baidu.com", "title", "description", bitmap);
+			break;
+		case R.id.share_weixin_gtjk:
+			weixinObject.jumpToBizProfile();
 			break;
 		case R.id.share_qzone:
 			final Bundle paramsZone = new Bundle();

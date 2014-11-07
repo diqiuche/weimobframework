@@ -79,6 +79,8 @@ public class SampleApplication extends Application{
 		weixinObject = WeixinObject.getInstance(getApplicationContext());
 		weixinObject.setAppKey("wxd9f77e179af57c49");
 		weixinObject.setAppSecret("aea68de24f31b48023f758a00b372d86");
+//		weixinObject.setAppKey("wx0764d2bf6e0cb8b5");
+//		weixinObject.setAccessSecret("8540801d40cf97a927a59750983cd187");
 		weixinObject.setScope("snsapi_userinfo");
 		weixinObject.setState("weimob_weixin_login_state");
 		
