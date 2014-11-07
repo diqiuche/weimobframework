@@ -81,6 +81,9 @@ public class SampleApplication extends Application{
 		weixinObject.setAppSecret("aea68de24f31b48023f758a00b372d86");
 //		weixinObject.setAppKey("wx0764d2bf6e0cb8b5");
 //		weixinObject.setAccessSecret("8540801d40cf97a927a59750983cd187");
+		//gh_eb4ee5efd751
+		weixinObject.setGh_id("gh_eb4ee5efd751");
+		weixinObject.setExit_message("exit");
 		weixinObject.setScope("snsapi_userinfo");
 		weixinObject.setState("weimob_weixin_login_state");
 		
