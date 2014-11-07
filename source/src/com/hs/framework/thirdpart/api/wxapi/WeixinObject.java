@@ -17,11 +17,13 @@ import com.hs.framework.utils.L;
 import com.hs.framework.utils.Util;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
+import com.tencent.mm.sdk.modelbiz.JumpToBizProfile;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -59,6 +61,7 @@ public class WeixinObject {
 	private Context context;
 	private String appKey;
 	private String appSecret;
+	private String gh_id;
 	private String scope;
 	private String state;
 	private String code;
@@ -295,6 +298,10 @@ public class WeixinObject {
 				+ "&openid=" + openid;
 	}
 	
+	/**
+	 * 
+	 * @param message
+	 */
 	public void share2Friends(String message){
 		WXTextObject textObj = new WXTextObject();
 		textObj.text = message;
@@ -308,6 +315,11 @@ public class WeixinObject {
 		getAPI().sendReq(req);
 	}
 	
+	/**
+	 * 
+	 * @param message
+	 * @param bitmap
+	 */
 	public void share2Friends(String message , Bitmap bitmap){
 		if(bitmap == null){
 			share2Friends(message);
@@ -322,6 +334,34 @@ public class WeixinObject {
 		
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = buildTransaction("img");
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneSession;
+		getAPI().sendReq(req);
+	}
+	
+	/**
+	 * 
+	 * @param message
+	 * @param webpageUrl
+	 * @param title
+	 * @param description
+	 * @param bitmap
+	 */
+	public void share2Friends(String message , String webpageUrl , String title , String description , Bitmap bitmap){
+		if(bitmap == null){
+			share2Friends(message);
+			return;
+		}
+		WXWebpageObject webpage = new WXWebpageObject();
+		webpage.webpageUrl = webpageUrl;
+		WXMediaMessage msg = new WXMediaMessage(webpage);
+		msg.mediaObject = webpage;
+		msg.title = title;
+		msg.description = description;
+		msg.thumbData = bmpToByteArray(bitmap, true);
+		
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("webpage");
 		req.message = msg;
 		req.scene = SendMessageToWX.Req.WXSceneSession;
 		getAPI().sendReq(req);
@@ -356,6 +396,41 @@ public class WeixinObject {
 		req.transaction = buildTransaction("img");
 		req.message = msg;
 		req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		getAPI().sendReq(req);
+	}
+	
+	/**
+	 * 
+	 * @param message
+	 * @param webpageUrl
+	 * @param title
+	 * @param description
+	 * @param bitmap
+	 */
+	public void share2FriendsLine(String message , String webpageUrl , String title , String description , Bitmap bitmap){
+		if(bitmap == null){
+			share2Friends(message);
+			return;
+		}
+		WXWebpageObject webpage = new WXWebpageObject();
+		webpage.webpageUrl = webpageUrl;
+		WXMediaMessage msg = new WXMediaMessage(webpage);
+		msg.title = title;
+		msg.description = description;
+		msg.thumbData = bmpToByteArray(bitmap, true);
+		
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("webpage");
+		req.message = msg;
+		req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		getAPI().sendReq(req);
+	}
+	
+	public void jumpToBizProfile(){
+		JumpToBizProfile.Req req = new JumpToBizProfile.Req();
+		req.toUserName = "gh_eb4ee5efd751"; //公众号原始ID
+		req.profileType = JumpToBizProfile.JUMP_TO_NORMAL_BIZ_PROFILE;
+		req.extMsg = "hahh";
 		getAPI().sendReq(req);
 	}
 	
