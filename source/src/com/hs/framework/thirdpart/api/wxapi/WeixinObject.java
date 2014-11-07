@@ -62,6 +62,7 @@ public class WeixinObject {
 	private String appKey;
 	private String appSecret;
 	private String gh_id;
+	private String exit_message;
 	private String scope;
 	private String state;
 	private String code;
@@ -428,9 +429,9 @@ public class WeixinObject {
 	
 	public void jumpToBizProfile(){
 		JumpToBizProfile.Req req = new JumpToBizProfile.Req();
-		req.toUserName = "gh_eb4ee5efd751"; //公众号原始ID
+		req.toUserName = gh_id; //公众号原始ID
 		req.profileType = JumpToBizProfile.JUMP_TO_NORMAL_BIZ_PROFILE;
-		req.extMsg = "hahh";
+		req.extMsg = exit_message;
 		getAPI().sendReq(req);
 	}
 	
@@ -492,6 +493,22 @@ public class WeixinObject {
 
 	public void setAppSecret(String appSecret) {
 		this.appSecret = appSecret;
+	}
+
+	public String getGh_id() {
+		return gh_id;
+	}
+
+	public void setGh_id(String gh_id) {
+		this.gh_id = gh_id;
+	}
+
+	public String getExit_message() {
+		return exit_message;
+	}
+
+	public void setExit_message(String exit_message) {
+		this.exit_message = exit_message;
 	}
 
 	public String getScope() {
